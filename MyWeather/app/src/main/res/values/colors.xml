@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+
+    <color name="white">#ffffff</color>
+    <color name="topbar_txt_color">#ffffff</color>
+
+    <color name="gray153">#999999</color>
+    <color name="divider">#B6B6B6</color>
+
+    <color name="blue_146">#92ddfc</color> <!-- (146,221,252) -->
+    <color name="tab_background">#FF202020</color>
+    <color name="bg">#FFEDEDED</color>
+</resources>

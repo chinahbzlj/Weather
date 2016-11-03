@@ -1,0 +1,1 @@
+package com.zhou.sdk.defines.protocol;import java.util.Map;public interface IServiceRequest {	/**获取http url*/	String getURL();	/**检查参数是否有效*/	boolean validateParams();	/**获取http 通信方法  get or post*/	int getMethod();	/**根据entity的类型来判断使用StringRequest还是JsonObjectRequest*/	Object getEntity();	Map<String, String> getHeader();}
