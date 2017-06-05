@@ -27,21 +27,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <service
-            android:name="com.baidu.location.f"
-            android:enabled="true"
-            android:process=":remote">
-            <intent-filter>
-                <action android:name="com.baidu.location.service_v2.2"></action>
-            </intent-filter>
-        </service>
+        <!--<service-->
+            <!--android:name="com.baidu.location.f"-->
+            <!--android:enabled="true"-->
+            <!--android:process=":remote">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="com.baidu.location.service_v2.2"></action>-->
+            <!--</intent-filter>-->
+        <!--</service>-->
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="j8c9tbtoHjGGobNLPNlN5FsgB82CFDhy" />
 
         <activity
-            android:name=".ui.main.MainActivity2"
+            android:name=".module.main.MainActivity2"
             android:label="@string/app_name"
             android:theme="@style/AppTheme">
             <intent-filter>
@@ -50,11 +50,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.main.MainActivity" />
-        <activity android:name=".ui.weather.AddCityActivity"/>
-        <activity android:name=".ui.weather.EditCityActivity"/>
-        <activity android:name=".ui.PermissionsActivity"/>
-        <activity android:name=".ui.TestActivity"/>
+        <activity android:name=".module.main.MainActivity" />
+        <activity android:name=".module.weather.AddCityActivity"/>
+        <activity android:name=".module.weather.EditCityActivity"/>
+        <activity android:name=".module.PermissionsActivity"/>
+        <activity android:name=".module.TestActivity"/>
     </application>
 
 </manifest>

@@ -26,10 +26,10 @@ public abstract class BaseRecycleViewAdapter<T extends RecyclerView.ViewHolder> 
 	}
 	
 	public interface OnItemClickListener {
-	    public void onItemClick(View parent, int position);
+	     void onItemClick(View parent, int position);
 	}
 	public interface OnItemLongClickListener {
-	    public boolean onItemLongClick(View parent, int position);
+	     boolean onItemLongClick(View parent, int position);
 	}
 	public void setOnItemClickListener(OnItemClickListener itemClickListener) {
 		this.itemClickListener = itemClickListener;

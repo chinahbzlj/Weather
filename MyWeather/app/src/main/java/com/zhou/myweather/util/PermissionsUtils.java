@@ -5,8 +5,6 @@ import android.app.Activity;
 import android.support.v4.content.ContextCompat;
 import android.content.pm.PackageManager;
 
-import com.zhou.sdk.util.LogUtil;
-
 import java.util.ArrayList;
 import java.util.List;
 

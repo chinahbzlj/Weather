@@ -1,7 +1,5 @@
 package com.zhou.myweather.util;
 
-import com.zhou.sdk.util.TimeUtil;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

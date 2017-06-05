@@ -12,7 +12,7 @@ import com.zhou.myweather.model.mos.CityMO;
 import com.zhou.myweather.model.mos.CityWeatherMO;
 import com.zhou.myweather.model.mos.ForecastMO;
 import com.zhou.myweather.model.mos.LocalCityInfoMO;
-import com.zhou.sdk.util.LogUtil;
+import com.zhou.myweather.util.LogUtil;
 
 import java.sql.SQLException;
 

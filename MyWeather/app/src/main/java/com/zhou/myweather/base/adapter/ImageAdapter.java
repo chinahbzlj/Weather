@@ -25,7 +25,7 @@ public class ImageAdapter extends PagerAdapter implements ViewPager.OnPageChange
         this.context = context;
         this.viewPager = viewPager;
         this.viewPager.addOnPageChangeListener(this);
-        views = new ArrayList<>();
+        views = new ArrayList<ImageView>();
         for (int i = 0; i < 3; i++) {
             ImageView imageView = new ImageView(context);
             imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));

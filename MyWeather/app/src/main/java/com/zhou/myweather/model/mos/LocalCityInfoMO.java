@@ -2,7 +2,7 @@ package com.zhou.myweather.model.mos;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
-import com.zhou.sdk.model.dto.CityInfoDTO;
+import com.zhou.myweather.sdk.model.dto.CityInfoDTO;
 
 /**
  * Created by Powerbee on 2016/5/18.

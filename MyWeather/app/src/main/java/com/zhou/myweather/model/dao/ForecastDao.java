@@ -3,7 +3,7 @@ package com.zhou.myweather.model.dao;
 import com.j256.ormlite.android.AndroidDatabaseConnection;
 import com.zhou.myweather.model.DatabaseHelper;
 import com.zhou.myweather.model.mos.ForecastMO;
-import com.zhou.sdk.util.LogUtil;
+import com.zhou.myweather.util.LogUtil;
 
 import java.sql.SQLException;
 import java.sql.Savepoint;

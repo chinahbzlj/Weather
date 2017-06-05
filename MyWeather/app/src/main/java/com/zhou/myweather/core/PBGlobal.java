@@ -9,9 +9,9 @@ import com.zhou.myweather.model.dao.ForecastDao;
 import com.zhou.myweather.model.datas.DataFoecast;
 import com.zhou.myweather.model.datas.DataLocalCity;
 import com.zhou.myweather.model.datas.DataLocalWeather;
-import com.zhou.sdk.core.HttpEngine;
-import com.zhou.sdk.core.VolleySingleton;
-import com.zhou.sdk.defines.Config;
+import com.zhou.myweather.sdk.core.HttpEngine;
+import com.zhou.myweather.sdk.core.VolleySingleton;
+import com.zhou.myweather.sdk.defines.Config;
 
 /**
  * Created by Powerbee on 2016/5/10.

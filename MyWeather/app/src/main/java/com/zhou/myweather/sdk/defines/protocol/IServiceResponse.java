@@ -1,0 +1,1 @@
+package com.zhou.myweather.sdk.defines.protocol;public interface IServiceResponse {	void initData(byte[] value);	void initData(String s);	boolean isError();	int errMsgRes();	String errMsg();	int getErrorCode();}

@@ -1,7 +1,6 @@
 package com.zhou.myweather.util;
 
 import com.zhou.myweather.model.mos.CityMO;
-import com.zhou.sdk.util.LogUtil;
 
 import java.io.File;
 import java.io.InputStream;

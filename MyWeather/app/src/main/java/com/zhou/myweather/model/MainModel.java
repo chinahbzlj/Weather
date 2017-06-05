@@ -2,8 +2,8 @@ package com.zhou.myweather.model;
 
 import com.zhou.myweather.R;
 import com.zhou.myweather.core.PBGlobal;
-import com.zhou.myweather.ui.calendar.CalendarFragment;
-import com.zhou.myweather.ui.weather.WeatherFragment;
+import com.zhou.myweather.module.calendar.CalendarFragment;
+import com.zhou.myweather.module.weather.WeatherFragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,8 +31,7 @@ public class MainModel {
 //        fragmentIcon.add(R.mipmap.ic_2);
 //        fragmentIcon.add(R.mipmap.ic_2);
 
-        List<Map<String, Object>> fragmentList = new ArrayList<>();
-        fragmentList = new ArrayList<>();
+        List<Map<String, Object>> fragmentList = new ArrayList<Map<String, Object>>();
         Map<String, Object> map = new HashMap<>();
         map.put("fragment", WeatherFragment.getInstance());
         map.put("title", "天气");

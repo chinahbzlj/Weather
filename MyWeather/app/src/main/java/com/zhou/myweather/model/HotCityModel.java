@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class HotCityModel {
     public static List<String> getHotCitys() {
-        List<String> citys = new ArrayList<>();
+        List<String> citys = new ArrayList<String>();
         citys.add("北京市");
         citys.add("天津市");
         citys.add("上海市");

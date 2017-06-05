@@ -4,7 +4,7 @@ import com.j256.ormlite.android.AndroidDatabaseConnection;
 import com.zhou.myweather.model.DatabaseHelper;
 import com.zhou.myweather.model.mos.CityMO;
 import com.zhou.myweather.model.mos.CityWeatherMO;
-import com.zhou.sdk.util.LogUtil;
+import com.zhou.myweather.util.LogUtil;
 
 import java.sql.SQLException;
 import java.sql.Savepoint;

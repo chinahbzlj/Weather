@@ -1,1 +1,1 @@
-include ':app', ':sdk', ':DatePicker'
+include ':app', ':DatePicker'

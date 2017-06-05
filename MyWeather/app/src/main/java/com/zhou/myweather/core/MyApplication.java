@@ -4,10 +4,9 @@ import android.app.Application;
 import android.app.Service;
 import android.os.Vibrator;
 
-import com.baidu.mapapi.SDKInitializer;
 import com.zhou.myweather.location.LocationService;
 import com.zhou.myweather.util.LeHandler;
-import com.zhou.sdk.core.VolleySingleton;
+import com.zhou.myweather.sdk.core.VolleySingleton;
 
 /**
  * Created by Powerbee on 2016/5/10.
@@ -21,24 +20,24 @@ public class MyApplication extends Application {
     }
 
     //百度定位
-    public LocationService locationService;
+//    public LocationService locationService;
     public Vibrator mVibrator;
 
     @Override
     public void onCreate() {
         super.onCreate();
         myApplication = this;
-        volleySingleton = VolleySingleton.getVolleySingleton(getApplicationContext());
+//        volleySingleton = VolleySingleton.getVolleySingleton(getApplicationContext());
         LeHandler.init(getApplicationContext());
 
         //初始化百度地图
-        SDKInitializer.initialize(getApplicationContext());
+//        SDKInitializer.initialize(getApplicationContext());
         /***
          * 初始化定位sdk，建议在Application中创建
          */
-        locationService = new LocationService(getApplicationContext());
+//        locationService = new LocationService(getApplicationContext());
         mVibrator =(Vibrator)getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);
-        SDKInitializer.initialize(getApplicationContext());
+//        SDKInitializer.initialize(getApplicationContext());
 
 
     }

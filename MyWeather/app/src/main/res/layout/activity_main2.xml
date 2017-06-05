@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    tools:context=".ui.main.MainActivity2">
+    tools:context=".module.main.MainActivity2">
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tablayout"
@@ -18,7 +18,7 @@
         app:tabIndicatorHeight="0dp"
         app:tabMode="fixed"/>
 
-    <com.zhou.myweather.ui.main.MyViewPager
+    <com.zhou.myweather.module.main.MyViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

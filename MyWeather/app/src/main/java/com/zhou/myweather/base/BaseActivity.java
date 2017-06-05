@@ -10,7 +10,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.zhou.myweather.R;
 import com.zhou.myweather.core.PBGlobal;
-import com.zhou.sdk.util.LogUtil;
+import com.zhou.myweather.util.LogUtil;
 
 import butterknife.ButterKnife;
 

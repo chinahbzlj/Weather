@@ -2,8 +2,8 @@ package com.zhou.myweather.model.mos;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
-import com.zhou.sdk.model.dto.CityWeatherHolder;
-import com.zhou.sdk.model.dto.ForecastDTO;
+import com.zhou.myweather.sdk.model.dto.CityWeatherHolder;
+import com.zhou.myweather.sdk.model.dto.ForecastDTO;
 
 import java.util.ArrayList;
 import java.util.List;
