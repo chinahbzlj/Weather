@@ -6,18 +6,18 @@ repositories {
 }
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.3"
-    signingConfigs {
-        debug {
-            Properties properties = new Properties()
-            properties.load(project.rootProject.file('local.properties').newDataInputStream())
-            def sdkDir = properties.getProperty('signing.debug.key')
-            storeFile file(sdkDir)
-            storePassword properties.getProperty('RELEASE_STORE_PASSWORD')
-            keyAlias properties.getProperty('RELEASE_KEY_ALIAS')
-            keyPassword properties.getProperty('RELEASE_KEY_PASSWORD')
-        }
-    }
+    buildToolsVersion "25.0.0"
+//    signingConfigs {
+//        debug {
+//            Properties properties = new Properties()
+//            properties.load(project.rootProject.file('local.properties').newDataInputStream())
+//            def sdkDir = properties.getProperty('signing.debug.key')
+//            storeFile file(sdkDir)
+//            storePassword properties.getProperty('RELEASE_STORE_PASSWORD')
+//            keyAlias properties.getProperty('RELEASE_KEY_ALIAS')
+//            keyPassword properties.getProperty('RELEASE_KEY_PASSWORD')
+//        }
+//    }
     sourceSets {
         main {
             jniLibs.srcDir 'libs'
@@ -29,6 +29,7 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
@@ -49,7 +50,7 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.3.0'
-    compile 'com.android.support:design:23.2.1'
+    compile 'com.android.support:design:25.0.0'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.squareup.picasso:picasso:2.3.2'
     compile files('libs/ormlite-android-4.48.jar')
@@ -57,4 +58,6 @@ dependencies {
     compile files('libs/jxl.jar')
     compile 'com.mylhyl:acp:1.0.0'
     compile project(':DatePicker')
+    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha7'
+    compile 'com.android.support:support-vector-drawable:23.4.0'
 }
