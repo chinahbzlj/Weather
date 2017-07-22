@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.zhou.myweather">
 
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
     <!-- 这个权限用于进行网络定位 -->
@@ -19,6 +18,7 @@
     <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+
     <application
         android:name=".core.MyApplication"
         android:allowBackup="true"
@@ -27,14 +27,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <!--<service-->
-            <!--android:name="com.baidu.location.f"-->
-            <!--android:enabled="true"-->
-            <!--android:process=":remote">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="com.baidu.location.service_v2.2"></action>-->
-            <!--</intent-filter>-->
-        <!--</service>-->
+        <!-- <service -->
+        <!-- android:name="com.baidu.location.f" -->
+        <!-- android:enabled="true" -->
+        <!-- android:process=":remote"> -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="com.baidu.location.service_v2.2"></action> -->
+        <!-- </intent-filter> -->
+        <!-- </service> -->
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
@@ -51,10 +51,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".module.main.MainActivity" />
-        <activity android:name=".module.weather.AddCityActivity"/>
-        <activity android:name=".module.weather.EditCityActivity"/>
-        <activity android:name=".module.PermissionsActivity"/>
-        <activity android:name=".module.TestActivity"/>
+        <activity android:name=".module.weather.AddCityActivity" />
+        <activity android:name=".module.weather.EditCityActivity" />
+        <activity android:name=".module.PermissionsActivity" />
+        <activity android:name=".module.TestActivity" />
+        <activity
+            android:name=".module.Main3Activity"
+            android:label="@string/title_activity_main3"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
