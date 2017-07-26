@@ -121,7 +121,7 @@ public class MainActivity2 extends BaseActivity implements MainView, TabLayout.O
         if (PBGlobal.getPbGlobal().isOne) {
             tablayout.setVisibility(View.GONE);
         }
-        tablayout.setOnTabSelectedListener(this);
+        tablayout.addOnTabSelectedListener(this);
         for (int i = 0; i < tablayout.getTabCount(); i++) {
             TabLayout.Tab tab = tablayout.getTabAt(i);
             if (tab != null) {

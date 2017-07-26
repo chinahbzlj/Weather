@@ -1,4 +1,4 @@
-package com.zhou.myweather.module;
+package com.zhou.myweather.module.main;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

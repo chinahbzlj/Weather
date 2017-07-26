@@ -21,7 +21,6 @@ public class MyFragmentAdapter extends FragmentPagerAdapter {
         super(fm);
     }
 
-
     @Override
     public Fragment getItem(int position) {
         return (TabBaseFragment) fragmentList.get(position).get("fragment");
