@@ -1,5 +1,7 @@
 package com.zhou.myweather.util;
 
+import android.annotation.SuppressLint;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,10 +11,12 @@ import java.util.Calendar;
  * Created by Powerbee on 2016/6/13.
  */
 public class DateUtil {
+    @SuppressLint("WrongConstant")
     public static int getYear() {
         return Calendar.getInstance().get(Calendar.YEAR);
     }
 
+    @SuppressLint("WrongConstant")
     public static int getMonth() {
         return Calendar.getInstance().get(Calendar.MONTH) + 1;
     }

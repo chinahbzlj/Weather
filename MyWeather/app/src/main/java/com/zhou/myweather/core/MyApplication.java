@@ -4,9 +4,11 @@ import android.app.Application;
 import android.app.Service;
 import android.os.Vibrator;
 
+import com.orhanobut.logger.Logger;
 import com.zhou.myweather.location.LocationService;
 import com.zhou.myweather.util.LeHandler;
 import com.zhou.myweather.sdk.core.VolleySingleton;
+import com.zhou.myweather.util.LogcatUtil;
 
 /**
  * Created by Powerbee on 2016/5/10.
@@ -29,7 +31,7 @@ public class MyApplication extends Application {
         myApplication = this;
 //        volleySingleton = VolleySingleton.getVolleySingleton(getApplicationContext());
         LeHandler.init(getApplicationContext());
-
+        Logger.init("Weather");
         //初始化百度地图
 //        SDKInitializer.initialize(getApplicationContext());
         /***
