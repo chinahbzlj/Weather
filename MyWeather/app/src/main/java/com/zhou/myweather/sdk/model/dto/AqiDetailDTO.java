@@ -30,7 +30,7 @@ public class AqiDetailDTO {
     public String quality;
     /** 二氧化硫1小时平均 */
     public String so2;
-    
+
     public AqiDetailDTO(JSONObject data){
         this.aqi = data.optString("aqi");
         this.area = data.optString("area");

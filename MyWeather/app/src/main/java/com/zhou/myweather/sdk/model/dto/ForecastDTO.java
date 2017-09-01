@@ -64,6 +64,9 @@ public class ForecastDTO {
     public IndexInfoDTO index;
     public int order;
 
+    public String night_weather_code;
+    public String day_weather_code;
+
     public ForecastDTO(JSONObject data) {
         this.day = data.optString("day");
         this.day_air_temperature = data.optString("day_air_temperature");

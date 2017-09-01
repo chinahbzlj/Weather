@@ -10,7 +10,7 @@ public class NowStateDTO {
     /** 空气指数，越小越好 */
     public String aqi;
     /** aqi明细数据 */
-    public AqiDetailDTO aqiDetailDTO;
+    public AqiDetailDTO aqiDetail;
     /** 空气湿度 */
     public String sd;
     /** 气温  */
@@ -25,6 +25,7 @@ public class NowStateDTO {
     public String wind_direction;
     /** 风力 */
     public String wind_power;
+    public String weather_code;
 
     public NowStateDTO(JSONObject data){
         this.aqi = data.optString("aqi");
@@ -35,6 +36,6 @@ public class NowStateDTO {
         this.weather_pic = data.optString("weather_pic");
         this.wind_direction = data.optString("wind_direction");
         this.wind_power = data.optString("wind_power");
-        this.aqiDetailDTO = new AqiDetailDTO(data.optJSONObject("aqiDetail"));
+//        this.aqiDetailDTO = new AqiDetailDTO(data.optJSONObject("aqiDetail"));
     }
 }

@@ -5,6 +5,6 @@ package com.zhou.myweather.net;
  */
 
 public class BaseDTO {
-    public String showapi_res_code;
+    public int showapi_res_code;
     public String showapi_res_error;
 }
