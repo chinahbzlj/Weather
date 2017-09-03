@@ -8,7 +8,7 @@ import com.zhou.myweather.sdk.model.dto.NowStateDTO;
  * Created by 周利杰 on 2017/8/19.
  */
 
-public class WeatherDTO extends BaseDTO {
+public class CityAllWeatherInfoDTO extends BaseDTO {
 
     public CityWeatherDTO showapi_res_body;
 

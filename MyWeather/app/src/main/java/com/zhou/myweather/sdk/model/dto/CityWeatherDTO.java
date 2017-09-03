@@ -56,10 +56,10 @@ public class CityWeatherDTO {
             weatherDTO.nowStateDTO = nowStateDTO;
             weatherDTO.forecastDTO = forecastDTOList.get(0);
             ForecastDTO forecastDTO = forecastDTOList.get(0);
-            cityWeatherHolder = new CityWeatherHolder(forecastDTOList, nowStateDTO.temperature, nowStateDTO.weather, forecastDTO.day_wind_direction, forecastDTO.day_wind_power,
-                    forecastDTO.day_air_temperature, forecastDTO.night_weather, forecastDTO.night_air_temperature, forecastDTO.weekday, forecastDTO.sun_begin_end, nowStateDTO.sd,
-                    nowStateDTO.wind_power, nowStateDTO.aqiDetailDTO.aqi, nowStateDTO.aqiDetailDTO.primary_pollutant, nowStateDTO.aqiDetailDTO.quality, nowStateDTO.aqiDetailDTO.pm2_5,
-                    nowStateDTO.wind_direction, time);
+//            cityWeatherHolder = new CityWeatherHolder(forecastDTOList, nowStateDTO.temperature, nowStateDTO.weather, forecastDTO.day_wind_direction, forecastDTO.day_wind_power,
+//                    forecastDTO.day_air_temperature, forecastDTO.night_weather, forecastDTO.night_air_temperature, forecastDTO.weekday, forecastDTO.sun_begin_end, nowStateDTO.sd,
+//                    nowStateDTO.wind_power, nowStateDTO.aqiDetailDTO.aqi, nowStateDTO.aqiDetailDTO.primary_pollutant, nowStateDTO.aqiDetailDTO.quality, nowStateDTO.aqiDetailDTO.pm2_5,
+//                    nowStateDTO.wind_direction, time);
         } catch (JSONException e) {
             e.printStackTrace();
         }
