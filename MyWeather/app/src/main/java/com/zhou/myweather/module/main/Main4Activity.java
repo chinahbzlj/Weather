@@ -22,7 +22,7 @@ public class Main4Activity extends AppCompatActivity implements MainContract.Vie
      */
     private ViewPager mViewPager;
     private TextView titleTextView;
-    private String[] citys = {"上海", "北京", "广州"};
+    private String[] citys = {"松江", "北京", "广州"};
     private CityWeatherAdapter adapter;
 
     @Override

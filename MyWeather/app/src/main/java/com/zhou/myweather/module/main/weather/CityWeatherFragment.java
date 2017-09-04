@@ -65,6 +65,7 @@ public class CityWeatherFragment extends ViewPagerFragment implements WeatherCon
     protected void onFragmentVisibleChange(boolean isVisible) {
         super.onFragmentVisibleChange(isVisible);
         if (isVisible) persenter.getWeather();
+        else persenter.detach();
     }
 
     @Override
