@@ -9,6 +9,7 @@ import com.zhou.myweather.location.LocationService;
 import com.zhou.myweather.util.LeHandler;
 import com.zhou.myweather.sdk.core.VolleySingleton;
 import com.zhou.myweather.util.LogcatUtil;
+import com.zhou.myweather.util.ToastUtil;
 
 /**
  * Created by Powerbee on 2016/5/10.
@@ -40,7 +41,7 @@ public class MyApplication extends Application {
 //        locationService = new LocationService(getApplicationContext());
         mVibrator =(Vibrator)getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);
 //        SDKInitializer.initialize(getApplicationContext());
-
+        ToastUtil.getInstance().setApplicatonContext(this);
 
     }
 }

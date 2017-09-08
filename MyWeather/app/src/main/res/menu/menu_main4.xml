@@ -4,7 +4,8 @@
     tools:context="com.zhou.myweather.module.main.Main4Activity">
     <item
         android:id="@+id/action_settings"
+        android:icon="@drawable/icon_setting_white2"
         android:orderInCategory="100"
         android:title="@string/action_settings"
-        app:showAsAction="never" />
+        app:showAsAction="always" />
 </menu>
