@@ -20,4 +20,3 @@ public class SettingActivity extends BaseActivity {
         toolbar.setTitle("设置");
     }
 }
-    

@@ -7,11 +7,13 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.zhou.myweather.R;
 import com.zhou.myweather.core.PBGlobal;
 import com.zhou.myweather.util.LogUtil;
+import com.zhou.myweather.util.ToastUtil;
 
 import butterknife.ButterKnife;
 
@@ -24,7 +26,7 @@ public class BaseActivity extends AppCompatActivity {
     public ProgressDialog loading;
 
 
-    private Handler handler = new Handler(){
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -36,9 +38,10 @@ public class BaseActivity extends AppCompatActivity {
 
     }
 
-    public Handler getHandler(){
+    public Handler getHandler() {
         return this.handler;
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,10 +64,11 @@ public class BaseActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    public TextView titleTextView ;
+    public TextView titleTextView;
+
     private void setupToolbar() {
         toolbar = ButterKnife.findById(this, R.id.tool_bar);
-        titleTextView = ButterKnife.findById(this,R.id.title);
+        titleTextView = ButterKnife.findById(this, R.id.title);
         if (toolbar == null) {
             LogUtil.i(TAG, "Didn't find a toolbar");
             return;
@@ -72,14 +76,17 @@ public class BaseActivity extends AppCompatActivity {
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
         toolbar.setTitleTextColor(Color.WHITE);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
     }
 
 
-    public void showLoading(int msgRes){
+    public void showLoading(int msgRes) {
         String string = getResources().getString(msgRes);
         showLoading(string, false);
     }
-    public void showLoading(String msg,boolean cancelable){
+
+    public void showLoading(String msg, boolean cancelable) {
         if (loading == null) {
             loading = new ProgressDialog(this);
             loading.setProgressStyle(ProgressDialog.STYLE_SPINNER);// 设置进度条的形式为圆形转动的进度条
@@ -95,5 +102,14 @@ public class BaseActivity extends AppCompatActivity {
             loading.dismiss();
             loading.cancel();
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            this.finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

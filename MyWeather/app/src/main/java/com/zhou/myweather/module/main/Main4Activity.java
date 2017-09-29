@@ -87,12 +87,11 @@ public class Main4Activity extends AppCompatActivity implements MainContract.Vie
         int id = item.getItemId();
 
         if (id == android.R.id.home) {
-            ToastUtil.getInstance().toastShowS("设置城市");
+//            ToastUtil.getInstance().toastShowS("设置城市");
             startActivity(new Intent(this, SettingCityActivity.class));
         } else if (id == R.id.action_settings) {
-            ToastUtil.getInstance().toastShowS("设置");
+//            ToastUtil.getInstance().toastShowS("设置");
             startActivity(new Intent(this, SettingActivity.class));
-//            return true;
         }
 
         return super.onOptionsItemSelected(item);
