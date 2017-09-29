@@ -19,7 +19,7 @@ public abstract class ViewPagerFragment extends Fragment {
     private boolean hasCreateView;
 
     /**
-     * 当前Fragment是否处于可见状态，防止因为ViewPager的缓存机制导致回调函数的触发
+     * 当前Fragment是否处于可见状态，防止因为ViewPager的缓存机制导致回调函数的触发e
      */
     private boolean isFragmentVisible;
 
@@ -28,9 +28,13 @@ public abstract class ViewPagerFragment extends Fragment {
      */
     protected View rootView;
 
+    private boolean isCreate = false;
+
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
+        if (!isCreate) return;
+
         if (rootView == null) return;
 
         hasCreateView = true;
@@ -48,6 +52,7 @@ public abstract class ViewPagerFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        isCreate = true;
         initVariable();
     }
 

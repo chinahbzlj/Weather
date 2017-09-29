@@ -21,6 +21,7 @@ public class WeatherPersenter implements Persenter {
     private CompositeSubscription compositeSubscription;
     private String city;
     private WeatherPOJO weatherPOJO;
+
     public WeatherPersenter(WeatherContract.View view, String city) {
         this.view = view;
         this.view.setPersenter(this);
@@ -30,12 +31,13 @@ public class WeatherPersenter implements Persenter {
 
     @Override
     public void start() {
-
     }
 
 
     @Override
     public void getWeather() {
+        if (compositeSubscription.isUnsubscribed())
+            compositeSubscription = new CompositeSubscription();
         compositeSubscription.add(
                 RetrofitHelper.getInstance().getDefaultRxApi()
                         .getWeatherForArea("8f7d2a968c174372b5e14156a4ceb6a2", "825", TimeUtil.getSystem(), "", city, "1", "0", "1", "1", "1")
@@ -68,11 +70,11 @@ public class WeatherPersenter implements Persenter {
 
     @Override
     public void interrupt() {
-        compositeSubscription.unsubscribe();
+        if (!compositeSubscription.isUnsubscribed()) compositeSubscription.unsubscribe();
     }
 
     @Override
     public void detach() {
-        compositeSubscription.unsubscribe();
+        if (!compositeSubscription.isUnsubscribed()) compositeSubscription.unsubscribe();
     }
 }

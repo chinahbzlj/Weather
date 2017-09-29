@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.zhou.myweather.R;
 import com.zhou.myweather.net.CityAllWeatherInfoDTO;
 import com.zhou.myweather.sdk.model.dto.NowStateDTO;
+import com.zhou.myweather.util.LogcatUtil;
 import com.zhou.myweather.widget.ViewPagerFragment;
 
 /**
@@ -53,6 +54,7 @@ public class CityWeatherFragment extends ViewPagerFragment implements WeatherCon
         this.quality = (TextView) rootView.findViewById(R.id.quality);
         this.pm2_5 = (TextView) rootView.findViewById(R.id.pm2_5);
         new WeatherPersenter(this, mCity);
+        LogcatUtil.e("oncreate"+mCity);
         return rootView;
     }
 
@@ -64,6 +66,7 @@ public class CityWeatherFragment extends ViewPagerFragment implements WeatherCon
     @Override
     protected void onFragmentVisibleChange(boolean isVisible) {
         super.onFragmentVisibleChange(isVisible);
+        LogcatUtil.d("city" + mCity + " " + String.valueOf(isVisible));
         if (isVisible) persenter.getWeather();
         else persenter.detach();
     }

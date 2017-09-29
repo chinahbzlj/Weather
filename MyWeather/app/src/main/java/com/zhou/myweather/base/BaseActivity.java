@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.TextView;
 
 import com.zhou.myweather.R;
 import com.zhou.myweather.core.PBGlobal;
@@ -60,8 +61,10 @@ public class BaseActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+    public TextView titleTextView ;
     private void setupToolbar() {
         toolbar = ButterKnife.findById(this, R.id.tool_bar);
+        titleTextView = ButterKnife.findById(this,R.id.title);
         if (toolbar == null) {
             LogUtil.i(TAG, "Didn't find a toolbar");
             return;
