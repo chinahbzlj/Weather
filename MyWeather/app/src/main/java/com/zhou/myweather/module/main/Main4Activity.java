@@ -12,10 +12,12 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.zhou.myweather.R;
+import com.zhou.myweather.model.WeatherInfoManager;
+import com.zhou.myweather.module.city.ManageCityActivity;
 import com.zhou.myweather.module.main.adapter.CityWeatherAdapter;
 import com.zhou.myweather.module.setting.SettingActivity;
-import com.zhou.myweather.module.settingcity.SettingCityActivity;
-import com.zhou.myweather.util.ToastUtil;
+
+import java.util.List;
 
 public class Main4Activity extends AppCompatActivity implements MainContract.View {
 
@@ -24,9 +26,8 @@ public class Main4Activity extends AppCompatActivity implements MainContract.Vie
      */
     private ViewPager mViewPager;
     private TextView titleTextView;
-    private String[] citys = {"松江", "北京", "广州"};
     private CityWeatherAdapter adapter;
-
+    private List<String> citys;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +40,14 @@ public class Main4Activity extends AppCompatActivity implements MainContract.Vie
         toolbar.setNavigationIcon(R.drawable.icon_city_white2);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
+
+
+        WeatherInfoManager.getWeatherInfoManager().addCity("上海");
+//        WeatherInfoManager.getWeatherInfoManager().addCity("广州");
+//        WeatherInfoManager.getWeatherInfoManager().addCity("北京");
+//        WeatherInfoManager.getWeatherInfoManager().addCity("深圳");
+//        WeatherInfoManager.getWeatherInfoManager().addCity("武汉");
+        citys = WeatherInfoManager.getWeatherInfoManager().getCitys();
         adapter = new CityWeatherAdapter(getSupportFragmentManager());
         adapter.setCitys(citys);
         // Set up the ViewPager with the sections adapter.
@@ -52,7 +61,7 @@ public class Main4Activity extends AppCompatActivity implements MainContract.Vie
 
             @Override
             public void onPageSelected(int position) {
-                setTitle(citys[position]);
+                setTitle(citys.get(position));
             }
 
             @Override
@@ -61,8 +70,8 @@ public class Main4Activity extends AppCompatActivity implements MainContract.Vie
             }
         });
         titleTextView = (TextView) findViewById(R.id.title);
-        if (citys.length != 0)
-            titleTextView.setText(citys[0]);
+        if (citys.size() != 0)
+            titleTextView.setText(citys.get(0));
         else {
 
         }
@@ -88,7 +97,7 @@ public class Main4Activity extends AppCompatActivity implements MainContract.Vie
 
         if (id == android.R.id.home) {
 //            ToastUtil.getInstance().toastShowS("设置城市");
-            startActivity(new Intent(this, SettingCityActivity.class));
+            startActivity(new Intent(this, ManageCityActivity.class));
         } else if (id == R.id.action_settings) {
 //            ToastUtil.getInstance().toastShowS("设置");
             startActivity(new Intent(this, SettingActivity.class));

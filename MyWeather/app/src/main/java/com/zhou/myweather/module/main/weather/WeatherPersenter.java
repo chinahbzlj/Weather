@@ -1,6 +1,7 @@
 package com.zhou.myweather.module.main.weather;
 
 import com.zhou.myweather.base.BaseSubscriber;
+import com.zhou.myweather.model.WeatherInfoManager;
 import com.zhou.myweather.module.main.weather.WeatherContract.Persenter;
 import com.zhou.myweather.net.CityAllWeatherInfoDTO;
 import com.zhou.myweather.util.JSONHelper;
@@ -60,6 +61,7 @@ public class WeatherPersenter implements Persenter {
                                 if (weatherDTO.showapi_res_code == 0) {
                                     weatherPOJO = new WeatherPOJO(weatherDTO);
                                     view.showWeather(weatherPOJO);
+                                    WeatherInfoManager.getWeatherInfoManager().addCityWeather(weatherPOJO);
                                 } else {
                                     LogcatUtil.d("请求失败：" + weatherDTO.showapi_res_error);
                                 }

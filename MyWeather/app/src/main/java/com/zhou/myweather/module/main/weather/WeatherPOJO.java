@@ -7,6 +7,7 @@ import com.zhou.myweather.net.CityAllWeatherInfoDTO;
  */
 
 public class WeatherPOJO {
+    public String city_name;
     public String city_weather;
     public String city_weather_temperature;
     public String week;
@@ -26,12 +27,13 @@ public class WeatherPOJO {
 
 
     public WeatherPOJO(CityAllWeatherInfoDTO weatherDTO) {
+        this.city_name = weatherDTO.showapi_res_body.cityInfo.c3;
         this.city_weather = weatherDTO.showapi_res_body.now.weather;
         this.city_weather_temperature = weatherDTO.showapi_res_body.now.temperature;
-        this.week = weatherDTO.showapi_res_body.f1.weekday;
+        this.week = getWeek(weatherDTO.showapi_res_body.f1.weekday);
         this.highestTemperatures = weatherDTO.showapi_res_body.f1.day_air_temperature;
         this.lowestTemperature = weatherDTO.showapi_res_body.f1.night_air_temperature;
-        this.city_weather_info = "今天" + weatherDTO.showapi_res_body.now.weather + "," + weatherDTO.showapi_res_body.f1.day_wind_direction + " "
+        this.city_weather_info = "今天白天" + weatherDTO.showapi_res_body.now.weather + "," + weatherDTO.showapi_res_body.f1.day_wind_direction + " "
                 + weatherDTO.showapi_res_body.f1.day_wind_power + "。最高气温" + weatherDTO.showapi_res_body.f1.day_air_temperature + "。今晚"
                 + weatherDTO.showapi_res_body.f1.night_weather + ",最低气温" + weatherDTO.showapi_res_body.f1.night_air_temperature;
         this.city_sunup = weatherDTO.showapi_res_body.f1.sun_begin_end.substring(0, weatherDTO.showapi_res_body.f1.sun_begin_end.indexOf("|"));
@@ -44,5 +46,24 @@ public class WeatherPOJO {
         this.primary_pollutant = weatherDTO.showapi_res_body.now.aqiDetail.primary_pollutant;
         this.quality = weatherDTO.showapi_res_body.now.aqiDetail.quality;
         this.pm2_5 = weatherDTO.showapi_res_body.now.aqiDetail.pm2_5;
+    }
+
+    private String getWeek(String week) {
+        if (week.equals("1")) {
+            return "星期一";
+        } else if (week.equals("2")) {
+            return "星期二";
+        } else if (week.equals("3")) {
+            return "星期三";
+        } else if (week.equals("4")) {
+            return "星期四";
+        } else if (week.equals("5")) {
+            return "星期五";
+        } else if (week.equals("6")) {
+            return "星期六";
+        } else if (week.equals("7")) {
+            return "星期七";
+        }
+        return "";
     }
 }
