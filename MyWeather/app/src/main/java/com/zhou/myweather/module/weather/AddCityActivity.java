@@ -58,6 +58,7 @@ public class AddCityActivity extends BaseActivity implements HttpEngine.HttpRequ
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_city);
+        toolbar.setTitle("添加城市");
         initView();
 
     }
@@ -72,7 +73,7 @@ public class AddCityActivity extends BaseActivity implements HttpEngine.HttpRequ
 //            }
 //        });
 //        hotCityAdapter.setData(HotCityModel.getHotCitys());
-        hotCityRecyclerView.setLayoutManager(new GridLayoutManager(this,3));
+        hotCityRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
 //        hotCityRecyclerView.setAdapter(hotCityAdapter);
 
         adapter = new CitysAdapter();

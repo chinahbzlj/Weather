@@ -4,6 +4,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <include layout="@layout/toobars" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/white" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
@@ -21,8 +28,10 @@
             <ImageView
                 android:id="@+id/icon_search"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:src="@mipmap/icon_search" />
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_margin="10dp"
+                android:src="@drawable/icon_search" />
 
             <ImageView
                 android:id="@+id/icon_cancel"
@@ -32,7 +41,7 @@
                 android:layout_centerVertical="true"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:src="@mipmap/icon_cancel" />
+                android:src="@drawable/icon_cancel" />
 
             <EditText
                 android:id="@+id/search"

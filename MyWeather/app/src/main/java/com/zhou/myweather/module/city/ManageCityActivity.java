@@ -1,5 +1,6 @@
 package com.zhou.myweather.module.city;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -8,6 +9,7 @@ import android.view.View;
 import com.zhou.myweather.R;
 import com.zhou.myweather.base.BaseActivity;
 import com.zhou.myweather.model.WeatherInfoManager;
+import com.zhou.myweather.module.weather.AddCityActivity;
 import com.zhou.myweather.util.ToastUtil;
 
 /**
@@ -34,7 +36,8 @@ public class ManageCityActivity extends BaseActivity implements ManageCityContra
         findViewById(R.id.add_city).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtil.getInstance().toastShowS("添加城市");
+//                ToastUtil.getInstance().toastShowS("添加城市");
+//                startActivity(new Intent(ManageCityActivity.this, AddCityActivity.class));
             }
         });
         findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
