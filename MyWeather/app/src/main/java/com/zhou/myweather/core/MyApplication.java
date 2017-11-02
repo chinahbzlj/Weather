@@ -4,6 +4,7 @@ import android.app.Application;
 import android.app.Service;
 import android.os.Vibrator;
 
+import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 import com.zhou.myweather.location.LocationService;
 import com.zhou.myweather.util.LeHandler;
@@ -32,7 +33,8 @@ public class MyApplication extends Application {
         myApplication = this;
 //        volleySingleton = VolleySingleton.getVolleySingleton(getApplicationContext());
         LeHandler.init(getApplicationContext());
-        Logger.init("Weather");
+//        Logger.init("Weather");
+        Logger.addLogAdapter(new AndroidLogAdapter());
         //初始化百度地图
 //        SDKInitializer.initialize(getApplicationContext());
         /***

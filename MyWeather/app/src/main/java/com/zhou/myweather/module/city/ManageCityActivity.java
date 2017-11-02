@@ -37,13 +37,14 @@ public class ManageCityActivity extends BaseActivity implements ManageCityContra
             @Override
             public void onClick(View v) {
 //                ToastUtil.getInstance().toastShowS("添加城市");
-//                startActivity(new Intent(ManageCityActivity.this, AddCityActivity.class));
+                startActivity(new Intent(ManageCityActivity.this, AddCityActivity.class));
             }
         });
         findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtil.getInstance().toastShowS("桌面天气");
+//                ToastUtil.getInstance().toastShowS("桌面天气");
+//                startActivity(new Intent(ManageCityActivity.this,));
             }
         });
     }
