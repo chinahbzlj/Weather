@@ -29,7 +29,7 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingTop="5dp"
-        android:textSize="@dimen/text_size_m_large" />
+        android:textSize="@dimen/text_size_16" />
 
     <View
         android:layout_width="match_parent"
@@ -53,7 +53,7 @@
                 android:layout_weight="1"
                 android:gravity="right"
                 android:text="日出："
-                android:textSize="@dimen/text_size_more_large" />
+                android:textSize="@dimen/text_size_20" />
 
             <TextView
                 android:id="@+id/city_sunup"
@@ -64,7 +64,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:text="日出"
-                android:textSize="@dimen/text_size_more_large" />
+                android:textSize="@dimen/text_size_20" />
         </LinearLayout>
 
         <LinearLayout
@@ -79,7 +79,7 @@
                 android:layout_weight="1"
                 android:gravity="right"
                 android:text="日落："
-                android:textSize="@dimen/text_size_more_large" />
+                android:textSize="@dimen/text_size_20" />
 
             <TextView
                 android:id="@+id/city_sunset"
@@ -90,7 +90,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:text="日落"
-                android:textSize="@dimen/text_size_more_large" />
+                android:textSize="@dimen/text_size_20" />
         </LinearLayout>
 
 
@@ -108,7 +108,7 @@
                 android:layout_weight="1"
                 android:gravity="right"
                 android:text="体感温度："
-                android:textSize="@dimen/text_size_more_large" />
+                android:textSize="@dimen/text_size_20" />
 
             <TextView
                 android:id="@+id/temperature"
@@ -119,7 +119,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:text=""
-                android:textSize="@dimen/text_size_more_large" />
+                android:textSize="@dimen/text_size_20" />
         </LinearLayout>
 
         <LinearLayout
@@ -136,7 +136,7 @@
                 android:layout_weight="1"
                 android:gravity="right"
                 android:text="湿度："
-                android:textSize="@dimen/text_size_more_large" />
+                android:textSize="@dimen/text_size_20" />
 
             <TextView
                 android:id="@+id/humidity"
@@ -147,7 +147,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:text=""
-                android:textSize="@dimen/text_size_more_large" />
+                android:textSize="@dimen/text_size_20" />
         </LinearLayout>
 
         <LinearLayout
@@ -163,7 +163,7 @@
                 android:layout_weight="1"
                 android:gravity="right"
                 android:text="风速："
-                android:textSize="@dimen/text_size_more_large" />
+                android:textSize="@dimen/text_size_20" />
 
             <TextView
                 android:id="@+id/wind_power"
@@ -174,7 +174,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:text=""
-                android:textSize="@dimen/text_size_more_large" />
+                android:textSize="@dimen/text_size_20" />
         </LinearLayout>
 
 
@@ -190,7 +190,7 @@
                 android:layout_weight="1"
                 android:gravity="right"
                 android:text="风向："
-                android:textSize="@dimen/text_size_more_large" />
+                android:textSize="@dimen/text_size_20" />
 
             <TextView
                 android:id="@+id/wind_direction"
@@ -201,7 +201,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:text=""
-                android:textSize="@dimen/text_size_more_large" />
+                android:textSize="@dimen/text_size_20" />
         </LinearLayout>
 
         <LinearLayout
@@ -217,7 +217,7 @@
                 android:layout_weight="1"
                 android:gravity="right"
                 android:text="空气质量："
-                android:textSize="@dimen/text_size_more_large" />
+                android:textSize="@dimen/text_size_20" />
 
             <TextView
                 android:id="@+id/aqi"
@@ -228,7 +228,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:text=""
-                android:textSize="@dimen/text_size_more_large" />
+                android:textSize="@dimen/text_size_20" />
         </LinearLayout>
 
         <LinearLayout
@@ -243,7 +243,7 @@
                 android:layout_weight="1"
                 android:gravity="right"
                 android:text="首要污染物："
-                android:textSize="@dimen/text_size_more_large" />
+                android:textSize="@dimen/text_size_20" />
 
             <TextView
                 android:id="@+id/primary_pollutant"
@@ -254,7 +254,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:text=""
-                android:textSize="@dimen/text_size_more_large" />
+                android:textSize="@dimen/text_size_20" />
         </LinearLayout>
 
         <LinearLayout
@@ -270,7 +270,7 @@
                 android:layout_weight="1"
                 android:gravity="right"
                 android:text="质量："
-                android:textSize="@dimen/text_size_more_large" />
+                android:textSize="@dimen/text_size_20" />
 
             <TextView
                 android:id="@+id/quality"
@@ -281,7 +281,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:text=""
-                android:textSize="@dimen/text_size_more_large" />
+                android:textSize="@dimen/text_size_20" />
         </LinearLayout>
 
         <LinearLayout
@@ -296,7 +296,7 @@
                 android:layout_weight="1"
                 android:gravity="right"
                 android:text="PM2.5："
-                android:textSize="@dimen/text_size_more_large" />
+                android:textSize="@dimen/text_size_20" />
 
             <TextView
                 android:id="@+id/pm2_5"
@@ -307,7 +307,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:text=""
-                android:textSize="@dimen/text_size_more_large" />
+                android:textSize="@dimen/text_size_20" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

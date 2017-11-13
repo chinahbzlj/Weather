@@ -7,6 +7,7 @@ import com.zhou.myweather.net.CityAllWeatherInfoDTO;
 import com.zhou.myweather.util.JSONHelper;
 import com.zhou.myweather.util.LogcatUtil;
 import com.zhou.myweather.util.TimeUtil;
+import com.zhou.myweather.util.ToastUtil;
 import com.zhou.myweather.util.http.RetrofitHelper;
 
 import rx.android.schedulers.AndroidSchedulers;
@@ -63,6 +64,7 @@ public class WeatherPersenter implements Persenter {
                                     view.showWeather(weatherPOJO);
                                     WeatherInfoManager.getWeatherInfoManager().addCityWeather(weatherPOJO);
                                 } else {
+                                    ToastUtil.getInstance().toastShowS(weatherDTO.showapi_res_error);
                                     LogcatUtil.d("请求失败：" + weatherDTO.showapi_res_error);
                                 }
                             }

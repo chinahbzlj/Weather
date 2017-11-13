@@ -27,5 +27,6 @@
     <dimen name="text_size_20">20sp</dimen>
     <dimen name="text_size_22">22sp</dimen>
     <dimen name="text_size_24">24sp</dimen>
+    <dimen name="divider_height">1dp</dimen>
 </resources>
 

@@ -8,11 +8,20 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.zhou.myweather.R;
 import com.zhou.myweather.base.BaseActivity;
+import com.zhou.myweather.base.adapter.BaseRecycleViewAdapter;
+import com.zhou.myweather.model.HotCityModel;
+import com.zhou.myweather.model.WeatherInfoManager;
 import com.zhou.myweather.model.dao.CityDao;
 import com.zhou.myweather.model.dao.CityInfoDao;
 import com.zhou.myweather.model.mos.CityMO;
@@ -24,6 +33,7 @@ import com.zhou.myweather.sdk.defines.protocol.IServiceResponse;
 import com.zhou.myweather.sdk.model.dto.AttributionDTO;
 import com.zhou.myweather.sdk.model.response.QueryAreaIdForAreaResponse;
 import com.zhou.myweather.util.LogUtil;
+import com.zhou.myweather.util.ToastUtil;
 
 import java.util.List;
 
@@ -43,6 +53,8 @@ public class AddCityActivity extends BaseActivity implements HttpEngine.HttpRequ
     RecyclerView recyclerView;
     @Bind(R.id.gridView)
     RecyclerView hotCityRecyclerView;
+    @Bind(R.id.hotCityGridView)
+    GridView hotCityGridView;
     private CitysAdapter adapter;
     private HotCityAdapter hotCityAdapter;
 
@@ -63,45 +75,37 @@ public class AddCityActivity extends BaseActivity implements HttpEngine.HttpRequ
 
     }
 
+    public static final String CITY_NAME = "cityName";
 
     private void initView() {
-//        hotCityAdapter = new HotCityAdapter(mContext);
-//        hotCityAdapter.setOnItemClickListener(new BaseRecycleViewAdapter.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(View parent, int position) {
-//
-//            }
-//        });
-//        hotCityAdapter.setData(HotCityModel.getHotCitys());
-        hotCityRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
-//        hotCityRecyclerView.setAdapter(hotCityAdapter);
+//        hotCityGridView.setAdapter(new HotCityAdapter());
+        hotCityAdapter = new HotCityAdapter(mContext);
+        hotCityAdapter.setOnItemClickListener(new BaseRecycleViewAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View parent, int position) {
 
-        adapter = new CitysAdapter();
-//        adapter.setOnItemClickListener(new BaseRecycleViewAdapter.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(final View parent, int position) {
-//                final CityMO cityMO = (CityMO) parent.getTag();
-//                new AlertDialog.Builder(mContext).setTitle("提示").setMessage("是否确定添加" + cityMO.namecn + "？").
-//                        setPositiveButton("确定", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                // TODO Auto-generated method stub
-//                                QueryAreaIdForAreaRequest request = new QueryAreaIdForAreaRequest(cityMO.namecn);
-//                                PBGlobal.getPbGlobal().getHttpEngine().senRequest(request, QueryAreaIdForAreaResponse.class, AddCityActivity.this);
-//                                showLoading(R.string.loading);
-//                                getHandler().sendEmptyMessageDelayed(200, 5 * 1000);
-//                            }
-//                        }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
-//
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        // TODO Auto-generated method stub
-//                    }
-//                }).show();
-//            }
-//        });
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        recyclerView.setAdapter(adapter);
+            }
+        });
+        hotCityAdapter.setData(HotCityModel.getHotCitys());
+        hotCityRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+//        hotCityRecyclerView.addItemDecoration(new HotCityItemDecoration(this));
+        hotCityRecyclerView.addItemDecoration(new MyItemDecoration(this, 3));
+        hotCityRecyclerView.setAdapter(hotCityAdapter);
+        hotCityAdapter.setOnItemClickListener(new BaseRecycleViewAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View parent, int position) {
+                String city = HotCityModel.getHotCitys().get(position);
+                if (city.equals("当前城市")) {
+                    ToastUtil.getInstance().toastShowS("暂时没有定位功能，请选择其他城市");
+                } else {
+                    if (WeatherInfoManager.getWeatherInfoManager().isContains(city)) return;
+                    Intent intent = new Intent();
+                    intent.putExtra(CITY_NAME, city);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
+            }
+        });
         search.addTextChangedListener(new EditChangeListener() {
             @Override
             public void afterTextChanged(Editable s) {
@@ -136,4 +140,42 @@ public class AddCityActivity extends BaseActivity implements HttpEngine.HttpRequ
             }
         }
     }
+
+//    class HotCityAdapter extends BaseAdapter {
+//
+//        @Override
+//        public int getCount() {
+//            return HotCityModel.getHotCitys().size();
+//        }
+//
+//        @Override
+//        public Object getItem(int position) {
+//            return HotCityModel.getHotCitys().get(position);
+//        }
+//
+//        @Override
+//        public long getItemId(int position) {
+//            return position;
+//        }
+//
+//        @Override
+//        public View getView(int position, View convertView, ViewGroup parent) {
+//            String city = HotCityModel.getHotCitys().get(position);
+//            ViewHolder viewHolder;
+//            if (convertView == null) {
+//                viewHolder = new ViewHolder();
+//                convertView = LayoutInflater.from(AddCityActivity.this).inflate(R.layout.item_citys, null);
+//                viewHolder.city = (TextView) convertView.findViewById(R.id.cityName);
+//                convertView.setTag(viewHolder);
+//            } else {
+//                viewHolder = (ViewHolder) convertView.getTag();
+//            }
+//            viewHolder.city.setText(city);
+//            return convertView;
+//        }
+//
+//        class ViewHolder {
+//            TextView city;
+//        }
+//    }
 }

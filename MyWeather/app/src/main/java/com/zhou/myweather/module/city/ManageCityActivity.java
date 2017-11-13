@@ -4,12 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.zhou.myweather.R;
 import com.zhou.myweather.base.BaseActivity;
 import com.zhou.myweather.model.WeatherInfoManager;
+import com.zhou.myweather.module.main.Main4Activity;
 import com.zhou.myweather.module.weather.AddCityActivity;
+import com.zhou.myweather.util.LogcatUtil;
 import com.zhou.myweather.util.ToastUtil;
 
 /**
@@ -37,7 +40,7 @@ public class ManageCityActivity extends BaseActivity implements ManageCityContra
             @Override
             public void onClick(View v) {
 //                ToastUtil.getInstance().toastShowS("添加城市");
-                startActivity(new Intent(ManageCityActivity.this, AddCityActivity.class));
+                startActivityForResult(new Intent(ManageCityActivity.this, AddCityActivity.class), Main4Activity.ADD_CITY);
             }
         });
         findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
@@ -52,5 +55,22 @@ public class ManageCityActivity extends BaseActivity implements ManageCityContra
     @Override
     public void setPersenter(ManageCityContract.Persenter persenter) {
         this.persenter = persenter;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        LogcatUtil.d(resultCode);
+        if (resultCode == RESULT_OK && requestCode == Main4Activity.ADD_CITY) {
+            String cityName = data.getStringExtra(AddCityActivity.CITY_NAME);
+//            if (!TextUtils.isEmpty(cityName)) LogcatUtil.d("城市名：" + cityName);
+//            else LogcatUtil.d("空");
+            if (!TextUtils.isEmpty(cityName)) {
+                Intent intent = new Intent();
+                intent.putExtra(AddCityActivity.CITY_NAME, cityName);
+                setResult(RESULT_OK, intent);
+                finish();
+            }
+        }
     }
 }

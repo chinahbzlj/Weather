@@ -6,17 +6,23 @@ import android.support.v7.widget.Toolbar;
 
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import android.widget.TextView;
 
 import com.zhou.myweather.R;
+import com.zhou.myweather.model.CityManager;
+import com.zhou.myweather.model.CityModel;
 import com.zhou.myweather.model.WeatherInfoManager;
 import com.zhou.myweather.module.city.ManageCityActivity;
 import com.zhou.myweather.module.main.adapter.CityWeatherAdapter;
 import com.zhou.myweather.module.setting.SettingActivity;
+import com.zhou.myweather.module.weather.AddCityActivity;
+import com.zhou.myweather.util.LogcatUtil;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 public class Main4Activity extends AppCompatActivity implements MainContract.View {
@@ -28,6 +34,7 @@ public class Main4Activity extends AppCompatActivity implements MainContract.Vie
     private TextView titleTextView;
     private CityWeatherAdapter adapter;
     private List<String> citys;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,12 +48,6 @@ public class Main4Activity extends AppCompatActivity implements MainContract.Vie
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
 
-
-        WeatherInfoManager.getWeatherInfoManager().addCity("上海");
-//        WeatherInfoManager.getWeatherInfoManager().addCity("广州");
-//        WeatherInfoManager.getWeatherInfoManager().addCity("北京");
-//        WeatherInfoManager.getWeatherInfoManager().addCity("深圳");
-//        WeatherInfoManager.getWeatherInfoManager().addCity("武汉");
         citys = WeatherInfoManager.getWeatherInfoManager().getCitys();
         adapter = new CityWeatherAdapter(getSupportFragmentManager());
         adapter.setCitys(citys);
@@ -70,11 +71,9 @@ public class Main4Activity extends AppCompatActivity implements MainContract.Vie
             }
         });
         titleTextView = (TextView) findViewById(R.id.title);
-        if (citys.size() != 0)
-            titleTextView.setText(citys.get(0));
-        else {
-
-        }
+        if (citys == null || citys.size() == 0)
+            startActivityForResult(new Intent(this, AddCityActivity.class), ADD_CITY);
+        else setTitle(citys.get(0));
     }
 
     private void setTitle(String title) {
@@ -88,6 +87,8 @@ public class Main4Activity extends AppCompatActivity implements MainContract.Vie
         return true;
     }
 
+    public static final int ADD_CITY = 1001;
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -97,7 +98,8 @@ public class Main4Activity extends AppCompatActivity implements MainContract.Vie
 
         if (id == android.R.id.home) {
 //            ToastUtil.getInstance().toastShowS("设置城市");
-            startActivity(new Intent(this, ManageCityActivity.class));
+//            startActivity(new Intent(this, ManageCityActivity.class));
+            startActivityForResult(new Intent(this, ManageCityActivity.class), ADD_CITY);
         } else if (id == R.id.action_settings) {
 //            ToastUtil.getInstance().toastShowS("设置");
             startActivity(new Intent(this, SettingActivity.class));
@@ -111,5 +113,20 @@ public class Main4Activity extends AppCompatActivity implements MainContract.Vie
 
     }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        LogcatUtil.d(resultCode);
+        if (resultCode == RESULT_OK && requestCode == Main4Activity.ADD_CITY) {
+            String cityName = data.getStringExtra(AddCityActivity.CITY_NAME);
+            if (!TextUtils.isEmpty(cityName)) {
+                setTitle(cityName);
+                WeatherInfoManager.getWeatherInfoManager().addCity(cityName);
+                citys = WeatherInfoManager.getWeatherInfoManager().getCitys();
+                adapter.setCitys(WeatherInfoManager.getWeatherInfoManager().getCitys());
+                adapter.notifyDataSetChanged();
+                mViewPager.setCurrentItem(WeatherInfoManager.getWeatherInfoManager().getCitys().size(), false);
+            }
+        }
+    }
 }

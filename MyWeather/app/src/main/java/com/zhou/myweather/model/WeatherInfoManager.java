@@ -64,4 +64,11 @@ public class WeatherInfoManager {
         citys.addAll(weatherInfoDTOHashMap.keySet());
         return citys;
     }
+
+    public boolean isContains(String cityName) {
+        for (String s : getCitys()) {
+            if (s.equals(cityName)) return true;
+        }
+        return false;
+    }
 }
