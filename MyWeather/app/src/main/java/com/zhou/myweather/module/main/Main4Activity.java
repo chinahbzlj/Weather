@@ -1,7 +1,6 @@
 package com.zhou.myweather.module.main;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import android.support.v4.view.ViewPager;
@@ -14,22 +13,17 @@ import android.widget.TextView;
 
 import com.zhou.myweather.R;
 import com.zhou.myweather.base.BaseActivity;
-import com.zhou.myweather.model.CityManager;
-import com.zhou.myweather.model.CityModel;
 import com.zhou.myweather.model.WeatherInfoManager;
 import com.zhou.myweather.module.city.ManageCityActivity;
 import com.zhou.myweather.module.main.adapter.CityWeatherAdapter;
-import com.zhou.myweather.module.main.weather.CityWeatherFragment;
 import com.zhou.myweather.module.setting.SettingActivity;
 import com.zhou.myweather.module.weather.AddCityActivity;
-import com.zhou.myweather.util.ActivityUtils;
 import com.zhou.myweather.util.LogcatUtil;
 
-import java.lang.reflect.Field;
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.List;
 
-public class Main4Activity extends BaseActivity implements MainContract.View {
+public class Main4Activity extends BaseActivity implements MainContract.View, CityManagerListener {
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -37,8 +31,7 @@ public class Main4Activity extends BaseActivity implements MainContract.View {
     private ViewPager mViewPager;
     private TextView titleTextView;
     private CityWeatherAdapter adapter;
-    private List<String> citys;
-    private List<CityWeatherFragment> fragments;
+    private List<String> citys = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +57,6 @@ public class Main4Activity extends BaseActivity implements MainContract.View {
 
             @Override
             public void onPageSelected(int position) {
-                Main4Activity.this.position = position;
                 setTitle(citys.get(position));
             }
 
@@ -74,12 +66,15 @@ public class Main4Activity extends BaseActivity implements MainContract.View {
             }
         });
         titleTextView = (TextView) findViewById(R.id.title);
-        if (citys == null || citys.size() == 0)
+        adapter.setCitys(citys);
+        if (citys.size() == 0)
             startActivityForResult(new Intent(this, AddCityActivity.class), ADD_CITY);
         else setTitle(citys.get(0));
+
+        CityManagerListenerManager.getCityManagerListenerManager().setCityManagerListener(this);
     }
 
-    private int position = -1;
+//    private int position = -1;
 
     private void setTitle(String title) {
         titleTextView.setText(title);
@@ -100,13 +95,9 @@ public class Main4Activity extends BaseActivity implements MainContract.View {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         if (id == android.R.id.home) {
-//            ToastUtil.getInstance().toastShowS("设置城市");
-//            startActivity(new Intent(this, ManageCityActivity.class));
             startActivityForResult(new Intent(this, ManageCityActivity.class), ADD_CITY);
         } else if (id == R.id.action_settings) {
-//            ToastUtil.getInstance().toastShowS("设置");
             startActivity(new Intent(this, SettingActivity.class));
         }
 
@@ -125,27 +116,28 @@ public class Main4Activity extends BaseActivity implements MainContract.View {
         if (resultCode == RESULT_OK) {
             if (requestCode == Main4Activity.ADD_CITY && data != null) {
                 String cityName = data.getStringExtra(AddCityActivity.CITY_NAME);
-                if (!TextUtils.isEmpty(cityName)) {
-                    setTitle(cityName);
-                    WeatherInfoManager.getWeatherInfoManager().addCity(cityName);
-                    citys = WeatherInfoManager.getWeatherInfoManager().getCitys();
-                    adapter.setCitys(citys);
-                    adapter.notifyDataSetChanged();
-                    mViewPager.setCurrentItem(WeatherInfoManager.getWeatherInfoManager().getCitys().size(), false);
-                }
-            } else {
-
-                citys = WeatherInfoManager.getWeatherInfoManager().getCitys();
-                if (citys.size() > position && position != -1) {
-                    setTitle(citys.get(position));
-                } else {
-                    position = citys.size() - 1;
-                    setTitle(citys.get(position));
-                }
-                adapter.setCitys(citys);
-                adapter.notifyDataSetChanged();
-                mViewPager.setCurrentItem(position, false);
+                if (!TextUtils.isEmpty(cityName)) addCity(cityName);
             }
         }
+    }
+
+    public void addCity(String cityName) {
+        setTitle(cityName);
+        WeatherInfoManager.getWeatherInfoManager().addCity(cityName);
+        citys.add(cityName);
+        adapter.notifyDataSetChanged();
+        mViewPager.setCurrentItem(WeatherInfoManager.getWeatherInfoManager().getCitys().size(), false);
+    }
+
+    @Override
+    public void removeCity(int position) {
+        if (position == -1) return;
+        citys.remove(position);
+        WeatherInfoManager.getWeatherInfoManager().remove(position);
+        adapter.notifyDataSetChanged();
+        mViewPager.setCurrentItem(position, false);
+
+        if (position == 0) setTitle("");
+        else setTitle(citys.get(position - 1));
     }
 }

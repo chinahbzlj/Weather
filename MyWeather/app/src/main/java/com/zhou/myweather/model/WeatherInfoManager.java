@@ -2,6 +2,7 @@ package com.zhou.myweather.model;
 
 import com.zhou.myweather.module.main.weather.WeatherPOJO;
 import com.zhou.myweather.net.CityAllWeatherInfoDTO;
+import com.zhou.myweather.util.LogcatUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -58,6 +59,11 @@ public class WeatherInfoManager {
 
     public void addCityWeather(WeatherPOJO weatherPOJO) {
         weatherInfoDTOHashMap.put(weatherPOJO.city_name, weatherPOJO);
+    }
+
+    public WeatherPOJO getWeatherPOJO(String cityName) {
+        WeatherPOJO weatherPOJO = weatherInfoDTOHashMap.get(cityName);
+        return weatherPOJO;
     }
 
     public void removeCity(String cityName) {

@@ -12,11 +12,15 @@ import android.view.View;
 import com.zhou.myweather.R;
 import com.zhou.myweather.base.BaseActivity;
 import com.zhou.myweather.model.WeatherInfoManager;
+import com.zhou.myweather.module.main.CityManagerListener;
 import com.zhou.myweather.module.main.Main4Activity;
+import com.zhou.myweather.module.main.weather.WeatherPOJO;
 import com.zhou.myweather.module.weather.AddCityActivity;
 import com.zhou.myweather.util.LogcatUtil;
 import com.zhou.myweather.util.ToastUtil;
 import com.zhou.myweather.widget.SwipeItemLayout;
+
+import java.util.List;
 
 /**
  * Created by 周利杰 on 2017/9/8.
@@ -26,6 +30,8 @@ public class ManageCityActivity extends BaseActivity implements ManageCityContra
     private static final String TAG = "ManageCityActivity";
     private ManageCityContract.Persenter persenter;
     private RecyclerView recyclerView;
+
+    private List<WeatherPOJO> weatherPOJOS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,28 +43,28 @@ public class ManageCityActivity extends BaseActivity implements ManageCityContra
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
         recyclerView.addOnItemTouchListener(new SwipeItemLayout.OnSwipeItemTouchListener(this));
-        recyclerView.setAdapter(new ManageAdapter(WeatherInfoManager.getWeatherInfoManager().getWeatherMap()));
+        weatherPOJOS = WeatherInfoManager.getWeatherInfoManager().getWeatherMap();
+        recyclerView.setAdapter(new ManageAdapter(weatherPOJOS));
         recyclerView.setItemAnimator(new DefaultItemAnimator() {
             @Override
             public void onAnimationFinished(RecyclerView.ViewHolder viewHolder) {
                 super.onAnimationFinished(viewHolder);
-                if (WeatherInfoManager.getWeatherInfoManager().getWeatherMap().size() == 0)
+                if (WeatherInfoManager.getWeatherInfoManager().getWeatherMap().size() == 0) {
                     startActivityForResult(new Intent(ManageCityActivity.this, AddCityActivity.class), Main4Activity.ADD_CITY);
+                    weatherPOJOS.clear();
+                }
             }
         });
         toolbar.setTitle("管理城市");
-//        titleTextView.setText("设置城市");t
         findViewById(R.id.add_city).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                ToastUtil.getInstance().toastShowS("添加城市");
                 startActivityForResult(new Intent(ManageCityActivity.this, AddCityActivity.class), Main4Activity.ADD_CITY);
             }
         });
         findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                ToastUtil.getInstance().toastShowS("桌面天气");
 //                startActivity(new Intent(ManageCityActivity.this,));
             }
         });
@@ -70,29 +76,11 @@ public class ManageCityActivity extends BaseActivity implements ManageCityContra
     }
 
     @Override
-    public void onBackPressed() {
-        back();
-    }
-
-    private void back() {
-        setResult(RESULT_OK);
-        finish();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) back();
-        return true;
-    }
-
-    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         LogcatUtil.d(resultCode);
         if (resultCode == RESULT_OK && requestCode == Main4Activity.ADD_CITY) {
             String cityName = data.getStringExtra(AddCityActivity.CITY_NAME);
-//            if (!TextUtils.isEmpty(cityName)) LogcatUtil.d("城市名：" + cityName);
-//            else LogcatUtil.d("空");
             if (!TextUtils.isEmpty(cityName)) {
                 Intent intent = new Intent();
                 intent.putExtra(AddCityActivity.CITY_NAME, cityName);

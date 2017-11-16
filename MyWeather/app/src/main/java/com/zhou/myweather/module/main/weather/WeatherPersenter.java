@@ -38,6 +38,14 @@ public class WeatherPersenter implements Persenter {
 
     @Override
     public void getWeather() {
+        WeatherPOJO weatherPOJOTmp = WeatherInfoManager.getWeatherInfoManager().getWeatherPOJO(city);
+        if (weatherPOJOTmp != null) {
+            view.showWeather(weatherPOJOTmp);
+            if (!TimeUtil.needRefresh(TimeUtil.getSystem(), weatherPOJOTmp.time, city, weatherPOJOTmp.city_name)) {
+//            view.showWeather(weatherPOJO);
+                return;
+            }
+        }
         if (compositeSubscription.isUnsubscribed())
             compositeSubscription = new CompositeSubscription();
         compositeSubscription.add(

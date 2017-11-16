@@ -24,7 +24,6 @@ public class CityWeatherAdapter extends FragmentStatePagerAdapter {
 
     public void setCitys(List<String> citys) {
         this.citys = citys;
-//        notifyDataSetChanged();
     }
 
     @Override

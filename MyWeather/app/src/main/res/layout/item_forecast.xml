@@ -2,8 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="20dp"
-    android:paddingRight="20dp"
     android:paddingTop="5dp">
 
     <TextView
@@ -12,7 +10,7 @@
         android:layout_height="wrap_content"
         android:text="星期一"
 
-        android:textSize="@dimen/text_size_more_large" />
+        android:textSize="@dimen/text_size_20" />
 
     <ImageView
         android:id="@+id/item_forecast_icon"
@@ -30,9 +28,8 @@
             android:id="@+id/forecast_highest_temperatures"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
             android:text="0"
-            android:textSize="@dimen/text_size_more_large" />
+            android:textSize="@dimen/text_size_20" />
 
         <TextView
             android:id="@+id/forecast_lowest_temperature"
@@ -40,6 +37,6 @@
             android:layout_height="wrap_content"
             android:text="0"
             android:textColor="@color/gray153"
-            android:textSize="@dimen/text_size_more_large" />
+            android:textSize="@dimen/text_size_20" />
     </LinearLayout>
 </RelativeLayout>

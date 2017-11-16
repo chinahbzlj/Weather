@@ -2,16 +2,26 @@ package com.zhou.myweather.module.main.weather;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zhou.myweather.R;
+import com.zhou.myweather.model.mos.ForecastMO;
+import com.zhou.myweather.module.weather.adapter.ForecastsAdapter;
 import com.zhou.myweather.net.CityAllWeatherInfoDTO;
+import com.zhou.myweather.sdk.model.dto.ForecastDTO;
 import com.zhou.myweather.sdk.model.dto.NowStateDTO;
+import com.zhou.myweather.util.LoadImageUtil;
 import com.zhou.myweather.util.LogcatUtil;
+import com.zhou.myweather.util.StringUtils;
 import com.zhou.myweather.widget.ViewPagerFragment;
+
+import java.util.List;
 
 /**
  * Created by 周利杰 on 2017/7/25.
@@ -22,15 +32,15 @@ public class CityWeatherFragment extends ViewPagerFragment implements WeatherCon
     private String mCity;
     private TextView city_weather, city_weather_temperature, week, highestTemperatures, lowestTemperature, city_weather_info;
     private TextView city_sunup, city_sunset, temperature, humidity, wind_power, wind_direction, aqi, primary_pollutant, quality, pm2_5;
+    private RecyclerView forecastsRecyclerView;
+    private LinearLayout forecasts;
 
     public CityWeatherFragment() {
     }
 
     public static CityWeatherFragment newInstance(String city) {
-        LogcatUtil.d(city);
         CityWeatherFragment fragment = new CityWeatherFragment();
         fragment.mCity = city;
-        LogcatUtil.d(fragment.mCity);
         return fragment;
     }
 
@@ -55,8 +65,9 @@ public class CityWeatherFragment extends ViewPagerFragment implements WeatherCon
         this.primary_pollutant = (TextView) rootView.findViewById(R.id.primary_pollutant);
         this.quality = (TextView) rootView.findViewById(R.id.quality);
         this.pm2_5 = (TextView) rootView.findViewById(R.id.pm2_5);
+        this.forecastsRecyclerView = (RecyclerView) rootView.findViewById(R.id.forecastsRecyclerView);
+        this.forecasts = (LinearLayout) rootView.findViewById(R.id.forecasts);
         new WeatherPersenter(this, mCity);
-        LogcatUtil.e("oncreate"+mCity);
         return rootView;
     }
 
@@ -69,15 +80,12 @@ public class CityWeatherFragment extends ViewPagerFragment implements WeatherCon
     protected void onFragmentVisibleChange(boolean isVisible) {
         super.onFragmentVisibleChange(isVisible);
         LogcatUtil.d("city" + mCity + " " + String.valueOf(isVisible));
-        if (isVisible) persenter.getWeather();
-        else persenter.detach();
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        LogcatUtil.d(mCity);
-// persenter.getWeather();
+        persenter.getWeather();
     }
 
     @Override
@@ -98,6 +106,19 @@ public class CityWeatherFragment extends ViewPagerFragment implements WeatherCon
         this.primary_pollutant.setText(weatherPOJO.primary_pollutant);
         this.quality.setText(weatherPOJO.quality);
         this.pm2_5.setText(weatherPOJO.pm2_5);
+        addView(weatherPOJO.forecastDTOS);
+    }
+
+    private void addView(List<ForecastDTO> list) {
+        this.forecasts.removeAllViews();
+        for (ForecastDTO forecastMO : list) {
+            View v = LayoutInflater.from(getActivity()).inflate(R.layout.item_forecast, null);
+            ((TextView) v.findViewById(R.id.item_forecast_week)).setText(StringUtils.getWeek(forecastMO.weekday));
+            ((TextView) v.findViewById(R.id.forecast_highest_temperatures)).setText(forecastMO.day_air_temperature + "°");
+            ((TextView) v.findViewById(R.id.forecast_lowest_temperature)).setText(" / " + forecastMO.night_air_temperature + "°");
+            LoadImageUtil.loadImage(getActivity(), forecastMO.day_weather_pic, (ImageView) v.findViewById(R.id.item_forecast_icon));
+            this.forecasts.addView(v);
+        }
     }
 
     @Override

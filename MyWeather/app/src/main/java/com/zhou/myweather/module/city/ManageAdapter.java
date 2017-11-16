@@ -14,6 +14,7 @@ import com.zhou.myweather.R;
 import com.zhou.myweather.base.adapter.BaseRecycleViewAdapter;
 import com.zhou.myweather.base.adapter.BaseRecycleViewHoldler;
 import com.zhou.myweather.model.WeatherInfoManager;
+import com.zhou.myweather.module.main.CityManagerListenerManager;
 import com.zhou.myweather.module.main.weather.WeatherPOJO;
 import com.zhou.myweather.module.weather.AddCityActivity;
 import com.zhou.myweather.net.CityAllWeatherInfoDTO;
@@ -77,9 +78,8 @@ public class ManageAdapter extends BaseRecycleViewAdapter<ManageAdapter.ViewHold
         public void onClick(View v) {
             if (v.getId() == R.id.delete) {
                 int pos = getAdapterPosition();
-//                WeatherInfoManager.getWeatherInfoManager().removePOJO(pos);
-                WeatherInfoManager.getWeatherInfoManager().remove(pos);
-                weatherPOJOS = WeatherInfoManager.getWeatherInfoManager().getWeatherMap();
+                weatherPOJOS.remove(pos);
+                CityManagerListenerManager.getCityManagerListenerManager().getCityManagerListener().removeCity(pos);
                 notifyItemRemoved(pos);
             }
         }

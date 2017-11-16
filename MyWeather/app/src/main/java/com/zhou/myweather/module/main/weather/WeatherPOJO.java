@@ -1,6 +1,10 @@
 package com.zhou.myweather.module.main.weather;
 
 import com.zhou.myweather.net.CityAllWeatherInfoDTO;
+import com.zhou.myweather.sdk.model.dto.ForecastDTO;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by 周利杰 on 2017/9/3.
@@ -24,7 +28,8 @@ public class WeatherPOJO {
     public String primary_pollutant;
     public String quality;
     public String pm2_5;
-
+    public String time;
+    public List<ForecastDTO> forecastDTOS;
 
     public WeatherPOJO(CityAllWeatherInfoDTO weatherDTO) {
         this.city_name = weatherDTO.showapi_res_body.cityInfo.c3;
@@ -46,6 +51,22 @@ public class WeatherPOJO {
         this.primary_pollutant = weatherDTO.showapi_res_body.now.aqiDetail.primary_pollutant;
         this.quality = weatherDTO.showapi_res_body.now.aqiDetail.quality;
         this.pm2_5 = weatherDTO.showapi_res_body.now.aqiDetail.pm2_5;
+        this.time = weatherDTO.showapi_res_body.time;
+        this.forecastDTOS = new ArrayList<>();
+        if (weatherDTO.showapi_res_body.f1 != null)
+            this.forecastDTOS.add(weatherDTO.showapi_res_body.f1);
+        if (weatherDTO.showapi_res_body.f2 != null)
+            this.forecastDTOS.add(weatherDTO.showapi_res_body.f2);
+        if (weatherDTO.showapi_res_body.f3 != null)
+            this.forecastDTOS.add(weatherDTO.showapi_res_body.f3);
+        if (weatherDTO.showapi_res_body.f4 != null)
+            this.forecastDTOS.add(weatherDTO.showapi_res_body.f4);
+        if (weatherDTO.showapi_res_body.f5 != null)
+            this.forecastDTOS.add(weatherDTO.showapi_res_body.f5);
+        if (weatherDTO.showapi_res_body.f6 != null)
+            this.forecastDTOS.add(weatherDTO.showapi_res_body.f6);
+        if (weatherDTO.showapi_res_body.f7 != null)
+            this.forecastDTOS.add(weatherDTO.showapi_res_body.f7);
     }
 
     private String getWeek(String week) {

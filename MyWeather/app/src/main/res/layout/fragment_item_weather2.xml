@@ -6,36 +6,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:scaleType="centerCrop">
-
-        <TextView
-            android:id="@+id/city_weather"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:textSize="@dimen/text_size_large" />
-
-        <TextView
-            android:id="@+id/city_weather_temperature"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="5dp"
-            android:gravity="center"
-            android:text="0"
-            android:textColor="@color/blue_146"
-            android:textSize="70dp"
-            app:layout_collapseMode="parallax"
-            app:layout_collapseParallaxMultiplier="0.7" />
-    </LinearLayout>
-
-    <include layout="@layout/layout_weather_top" />
-
     <ScrollView
         android:layout_width="match_parent"
         android:background="@color/bg"
