@@ -27,8 +27,10 @@ public class CityWeatherFragment extends ViewPagerFragment implements WeatherCon
     }
 
     public static CityWeatherFragment newInstance(String city) {
+        LogcatUtil.d(city);
         CityWeatherFragment fragment = new CityWeatherFragment();
         fragment.mCity = city;
+        LogcatUtil.d(fragment.mCity);
         return fragment;
     }
 
@@ -69,6 +71,13 @@ public class CityWeatherFragment extends ViewPagerFragment implements WeatherCon
         LogcatUtil.d("city" + mCity + " " + String.valueOf(isVisible));
         if (isVisible) persenter.getWeather();
         else persenter.detach();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        LogcatUtil.d(mCity);
+// persenter.getWeather();
     }
 
     @Override

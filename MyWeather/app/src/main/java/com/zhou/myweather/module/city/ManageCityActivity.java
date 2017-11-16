@@ -2,9 +2,11 @@ package com.zhou.myweather.module.city;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.zhou.myweather.R;
@@ -14,6 +16,7 @@ import com.zhou.myweather.module.main.Main4Activity;
 import com.zhou.myweather.module.weather.AddCityActivity;
 import com.zhou.myweather.util.LogcatUtil;
 import com.zhou.myweather.util.ToastUtil;
+import com.zhou.myweather.widget.SwipeItemLayout;
 
 /**
  * Created by 周利杰 on 2017/9/8.
@@ -33,7 +36,16 @@ public class ManageCityActivity extends BaseActivity implements ManageCityContra
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
+        recyclerView.addOnItemTouchListener(new SwipeItemLayout.OnSwipeItemTouchListener(this));
         recyclerView.setAdapter(new ManageAdapter(WeatherInfoManager.getWeatherInfoManager().getWeatherMap()));
+        recyclerView.setItemAnimator(new DefaultItemAnimator() {
+            @Override
+            public void onAnimationFinished(RecyclerView.ViewHolder viewHolder) {
+                super.onAnimationFinished(viewHolder);
+                if (WeatherInfoManager.getWeatherInfoManager().getWeatherMap().size() == 0)
+                    startActivityForResult(new Intent(ManageCityActivity.this, AddCityActivity.class), Main4Activity.ADD_CITY);
+            }
+        });
         toolbar.setTitle("管理城市");
 //        titleTextView.setText("设置城市");t
         findViewById(R.id.add_city).setOnClickListener(new View.OnClickListener() {
@@ -55,6 +67,22 @@ public class ManageCityActivity extends BaseActivity implements ManageCityContra
     @Override
     public void setPersenter(ManageCityContract.Persenter persenter) {
         this.persenter = persenter;
+    }
+
+    @Override
+    public void onBackPressed() {
+        back();
+    }
+
+    private void back() {
+        setResult(RESULT_OK);
+        finish();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) back();
+        return true;
     }
 
     @Override

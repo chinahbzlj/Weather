@@ -13,19 +13,23 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.zhou.myweather.R;
+import com.zhou.myweather.base.BaseActivity;
 import com.zhou.myweather.model.CityManager;
 import com.zhou.myweather.model.CityModel;
 import com.zhou.myweather.model.WeatherInfoManager;
 import com.zhou.myweather.module.city.ManageCityActivity;
 import com.zhou.myweather.module.main.adapter.CityWeatherAdapter;
+import com.zhou.myweather.module.main.weather.CityWeatherFragment;
 import com.zhou.myweather.module.setting.SettingActivity;
 import com.zhou.myweather.module.weather.AddCityActivity;
+import com.zhou.myweather.util.ActivityUtils;
 import com.zhou.myweather.util.LogcatUtil;
 
 import java.lang.reflect.Field;
+import java.util.Iterator;
 import java.util.List;
 
-public class Main4Activity extends AppCompatActivity implements MainContract.View {
+public class Main4Activity extends BaseActivity implements MainContract.View {
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -34,12 +38,12 @@ public class Main4Activity extends AppCompatActivity implements MainContract.Vie
     private TextView titleTextView;
     private CityWeatherAdapter adapter;
     private List<String> citys;
+    private List<CityWeatherFragment> fragments;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main4);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
@@ -47,10 +51,8 @@ public class Main4Activity extends AppCompatActivity implements MainContract.Vie
         toolbar.setNavigationIcon(R.drawable.icon_city_white2);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-
-        citys = WeatherInfoManager.getWeatherInfoManager().getCitys();
+//        WeatherInfoManager.getWeatherInfoManager().addCity("上海");
         adapter = new CityWeatherAdapter(getSupportFragmentManager());
-        adapter.setCitys(citys);
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(adapter);
@@ -62,6 +64,7 @@ public class Main4Activity extends AppCompatActivity implements MainContract.Vie
 
             @Override
             public void onPageSelected(int position) {
+                Main4Activity.this.position = position;
                 setTitle(citys.get(position));
             }
 
@@ -75,6 +78,8 @@ public class Main4Activity extends AppCompatActivity implements MainContract.Vie
             startActivityForResult(new Intent(this, AddCityActivity.class), ADD_CITY);
         else setTitle(citys.get(0));
     }
+
+    private int position = -1;
 
     private void setTitle(String title) {
         titleTextView.setText(title);
@@ -105,7 +110,7 @@ public class Main4Activity extends AppCompatActivity implements MainContract.Vie
             startActivity(new Intent(this, SettingActivity.class));
         }
 
-        return super.onOptionsItemSelected(item);
+        return true;
     }
 
     @Override
@@ -117,15 +122,29 @@ public class Main4Activity extends AppCompatActivity implements MainContract.Vie
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         LogcatUtil.d(resultCode);
-        if (resultCode == RESULT_OK && requestCode == Main4Activity.ADD_CITY) {
-            String cityName = data.getStringExtra(AddCityActivity.CITY_NAME);
-            if (!TextUtils.isEmpty(cityName)) {
-                setTitle(cityName);
-                WeatherInfoManager.getWeatherInfoManager().addCity(cityName);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == Main4Activity.ADD_CITY && data != null) {
+                String cityName = data.getStringExtra(AddCityActivity.CITY_NAME);
+                if (!TextUtils.isEmpty(cityName)) {
+                    setTitle(cityName);
+                    WeatherInfoManager.getWeatherInfoManager().addCity(cityName);
+                    citys = WeatherInfoManager.getWeatherInfoManager().getCitys();
+                    adapter.setCitys(citys);
+                    adapter.notifyDataSetChanged();
+                    mViewPager.setCurrentItem(WeatherInfoManager.getWeatherInfoManager().getCitys().size(), false);
+                }
+            } else {
+
                 citys = WeatherInfoManager.getWeatherInfoManager().getCitys();
-                adapter.setCitys(WeatherInfoManager.getWeatherInfoManager().getCitys());
+                if (citys.size() > position && position != -1) {
+                    setTitle(citys.get(position));
+                } else {
+                    position = citys.size() - 1;
+                    setTitle(citys.get(position));
+                }
+                adapter.setCitys(citys);
                 adapter.notifyDataSetChanged();
-                mViewPager.setCurrentItem(WeatherInfoManager.getWeatherInfoManager().getCitys().size(), false);
+                mViewPager.setCurrentItem(position, false);
             }
         }
     }

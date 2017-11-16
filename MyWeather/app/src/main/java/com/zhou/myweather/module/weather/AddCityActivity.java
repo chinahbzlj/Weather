@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -32,7 +33,9 @@ import com.zhou.myweather.sdk.core.HttpEngine;
 import com.zhou.myweather.sdk.defines.protocol.IServiceResponse;
 import com.zhou.myweather.sdk.model.dto.AttributionDTO;
 import com.zhou.myweather.sdk.model.response.QueryAreaIdForAreaResponse;
+import com.zhou.myweather.util.ActivityUtils;
 import com.zhou.myweather.util.LogUtil;
+import com.zhou.myweather.util.LogcatUtil;
 import com.zhou.myweather.util.ToastUtil;
 
 import java.util.List;
@@ -141,7 +144,28 @@ public class AddCityActivity extends BaseActivity implements HttpEngine.HttpRequ
         }
     }
 
-//    class HotCityAdapter extends BaseAdapter {
+    @Override
+    public void onBackPressed() {
+        mfinish();
+    }
+
+    public void mfinish() {
+        if (WeatherInfoManager.getWeatherInfoManager().getWeatherMap().size() != 0) {
+            finish();
+        } else {
+            ActivityUtils.getActivityUtils().exit();
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            mfinish();
+        }
+        return true;
+    }
+
+    //    class HotCityAdapter extends BaseAdapter {
 //
 //        @Override
 //        public int getCount() {

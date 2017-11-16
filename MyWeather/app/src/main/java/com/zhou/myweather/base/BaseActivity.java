@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.zhou.myweather.R;
 import com.zhou.myweather.core.PBGlobal;
+import com.zhou.myweather.util.ActivityUtils;
 import com.zhou.myweather.util.LogUtil;
 import com.zhou.myweather.util.ToastUtil;
 
@@ -45,6 +46,8 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActivityUtils.getActivityUtils().pushActivity(this);
+
         PBGlobal.getPbGlobal().setAppContext(getApplicationContext());
         if (PBGlobal.getPbGlobal().getAppContext() != null) {
             PBGlobal.getPbGlobal().init(BaseActivity.this);
@@ -62,6 +65,7 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        ActivityUtils.getActivityUtils().popActivity(this);
     }
 
     public TextView titleTextView;
@@ -103,6 +107,8 @@ public class BaseActivity extends AppCompatActivity {
             loading.cancel();
         }
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

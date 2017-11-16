@@ -53,7 +53,7 @@
             android:name=".module.main.MainActivity2"
             android:label="@string/title_activity_main3"
             android:theme="@style/AppTheme" />
-        <activity android:name=".module.city.ManageCityActivity" />
+        <activity android:name=".module.city.ManageCityActivity" android:launchMode="singleTop"/>
         <activity android:name=".module.setting.SettingActivity" />
     </application>
 

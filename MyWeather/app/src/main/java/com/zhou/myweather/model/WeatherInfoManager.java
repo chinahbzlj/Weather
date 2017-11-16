@@ -5,6 +5,7 @@ import com.zhou.myweather.net.CityAllWeatherInfoDTO;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +43,19 @@ public class WeatherInfoManager {
         return weatherPOJOS;
     }
 
+    public boolean removePOJO(int position) {
+        WeatherPOJO weatherPOJO = getWeatherMap().get(position);
+        Iterator<WeatherPOJO> it = getWeatherMap().iterator();
+        while (it.hasNext()) {
+            if (it.next().city_name.equals(weatherPOJO.city_name)) {
+                it.remove();
+                weatherInfoDTOHashMap.remove(weatherPOJO.city_name);
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void addCityWeather(WeatherPOJO weatherPOJO) {
         weatherInfoDTOHashMap.put(weatherPOJO.city_name, weatherPOJO);
     }
@@ -68,6 +82,19 @@ public class WeatherInfoManager {
     public boolean isContains(String cityName) {
         for (String s : getCitys()) {
             if (s.equals(cityName)) return true;
+        }
+        return false;
+    }
+
+    public boolean remove(int position) {
+        String cityName = getCitys().get(position);
+        Iterator<String> iterator = getCitys().iterator();
+        while (iterator.hasNext()) {
+            if (iterator.next().equals(cityName)) {
+                iterator.remove();
+                weatherInfoDTOHashMap.remove(cityName);
+                return true;
+            }
         }
         return false;
     }
