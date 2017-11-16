@@ -74,8 +74,6 @@ public class Main4Activity extends BaseActivity implements MainContract.View, Ci
         CityManagerListenerManager.getCityManagerListenerManager().setCityManagerListener(this);
     }
 
-//    private int position = -1;
-
     private void setTitle(String title) {
         titleTextView.setText(title);
     }
@@ -100,7 +98,6 @@ public class Main4Activity extends BaseActivity implements MainContract.View, Ci
         } else if (id == R.id.action_settings) {
             startActivity(new Intent(this, SettingActivity.class));
         }
-
         return true;
     }
 
