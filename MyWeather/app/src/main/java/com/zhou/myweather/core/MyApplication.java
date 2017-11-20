@@ -2,14 +2,17 @@ package com.zhou.myweather.core;
 
 import android.app.Application;
 import android.app.Service;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Vibrator;
 
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
-import com.zhou.myweather.location.LocationService;
+import com.zhou.myweather.DaoMaster;
+import com.zhou.myweather.DaoSession;
+import com.zhou.myweather.WeatherPODao;
+import com.zhou.myweather.db.WeatherDAO;
 import com.zhou.myweather.util.LeHandler;
 import com.zhou.myweather.sdk.core.VolleySingleton;
-import com.zhou.myweather.util.LogcatUtil;
 import com.zhou.myweather.util.ToastUtil;
 
 /**
@@ -41,9 +44,10 @@ public class MyApplication extends Application {
          * 初始化定位sdk，建议在Application中创建
          */
 //        locationService = new LocationService(getApplicationContext());
-        mVibrator =(Vibrator)getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);
+        mVibrator = (Vibrator) getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);
 //        SDKInitializer.initialize(getApplicationContext());
         ToastUtil.getInstance().setApplicatonContext(this);
-
+        WeatherDAO.getWeatherDAO().init(this);
     }
+
 }

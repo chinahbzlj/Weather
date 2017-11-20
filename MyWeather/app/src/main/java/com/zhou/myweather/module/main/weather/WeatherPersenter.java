@@ -1,6 +1,12 @@
 package com.zhou.myweather.module.main.weather;
 
+import android.content.Context;
+
 import com.zhou.myweather.base.BaseSubscriber;
+import com.zhou.myweather.core.MyApplication;
+import com.zhou.myweather.db.WeatherDAO;
+import com.zhou.myweather.db.WeatherVO;
+import com.zhou.myweather.db.dto.ForecastPO;
 import com.zhou.myweather.model.WeatherInfoManager;
 import com.zhou.myweather.module.main.weather.WeatherContract.Persenter;
 import com.zhou.myweather.net.CityAllWeatherInfoDTO;
@@ -22,13 +28,15 @@ public class WeatherPersenter implements Persenter {
     private WeatherContract.View view;
     private CompositeSubscription compositeSubscription;
     private String city;
-    private WeatherPOJO weatherPOJO;
+    private WeatherVO weatherPOJO;
+    private Context mContext;
 
     public WeatherPersenter(WeatherContract.View view, String city) {
         this.view = view;
         this.view.setPersenter(this);
         compositeSubscription = new CompositeSubscription();
         this.city = city;
+        this.mContext = ((CityWeatherFragment) view).getContext();
     }
 
     @Override
@@ -38,7 +46,7 @@ public class WeatherPersenter implements Persenter {
 
     @Override
     public void getWeather() {
-        WeatherPOJO weatherPOJOTmp = WeatherInfoManager.getWeatherInfoManager().getWeatherPOJO(city);
+        final WeatherVO weatherPOJOTmp = WeatherInfoManager.getWeatherInfoManager().getWeatherPOJO(city);
         if (weatherPOJOTmp != null) {
             view.showWeather(weatherPOJOTmp);
             if (!TimeUtil.needRefresh(TimeUtil.getSystem(), weatherPOJOTmp.time, city, weatherPOJOTmp.city_name)) {
@@ -61,16 +69,18 @@ public class WeatherPersenter implements Persenter {
 
                             @Override
                             public void onError(Throwable e) {
-                                LogcatUtil.d("请求失败：");
+                                LogcatUtil.d("请求错误："+e.getMessage());
                             }
 
                             @Override
                             public void onNext(CityAllWeatherInfoDTO weatherDTO) {
                                 LogcatUtil.d(JSONHelper.toJson(weatherDTO));
                                 if (weatherDTO.showapi_res_code == 0) {
-                                    weatherPOJO = new WeatherPOJO(weatherDTO);
-                                    view.showWeather(weatherPOJO);
+                                    weatherPOJO = new WeatherVO(weatherDTO);
                                     WeatherInfoManager.getWeatherInfoManager().addCityWeather(weatherPOJO);
+                                    WeatherDAO.getWeatherDAO().insertWeather(weatherPOJO.toWeatherPO());
+                                    WeatherDAO.getWeatherDAO().insertForecastPO(weatherPOJO.getForecastPOs());
+                                    view.showWeather(weatherPOJO);
                                 } else {
                                     ToastUtil.getInstance().toastShowS(weatherDTO.showapi_res_error);
                                     LogcatUtil.d("请求失败：" + weatherDTO.showapi_res_error);

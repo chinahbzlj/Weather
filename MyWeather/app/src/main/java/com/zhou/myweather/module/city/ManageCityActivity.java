@@ -6,18 +6,15 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.view.MenuItem;
 import android.view.View;
 
 import com.zhou.myweather.R;
 import com.zhou.myweather.base.BaseActivity;
 import com.zhou.myweather.model.WeatherInfoManager;
-import com.zhou.myweather.module.main.CityManagerListener;
 import com.zhou.myweather.module.main.Main4Activity;
-import com.zhou.myweather.module.main.weather.WeatherPOJO;
+import com.zhou.myweather.db.WeatherVO;
 import com.zhou.myweather.module.weather.AddCityActivity;
 import com.zhou.myweather.util.LogcatUtil;
-import com.zhou.myweather.util.ToastUtil;
 import com.zhou.myweather.widget.SwipeItemLayout;
 
 import java.util.List;
@@ -31,7 +28,7 @@ public class ManageCityActivity extends BaseActivity implements ManageCityContra
     private ManageCityContract.Persenter persenter;
     private RecyclerView recyclerView;
 
-    private List<WeatherPOJO> weatherPOJOS;
+    private List<WeatherVO> weatherPOJOS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

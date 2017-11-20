@@ -11,11 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zhou.myweather.R;
-import com.zhou.myweather.model.mos.ForecastMO;
-import com.zhou.myweather.module.weather.adapter.ForecastsAdapter;
-import com.zhou.myweather.net.CityAllWeatherInfoDTO;
+import com.zhou.myweather.db.WeatherVO;
 import com.zhou.myweather.sdk.model.dto.ForecastDTO;
-import com.zhou.myweather.sdk.model.dto.NowStateDTO;
 import com.zhou.myweather.util.LoadImageUtil;
 import com.zhou.myweather.util.LogcatUtil;
 import com.zhou.myweather.util.StringUtils;
@@ -89,7 +86,7 @@ public class CityWeatherFragment extends ViewPagerFragment implements WeatherCon
     }
 
     @Override
-    public void showWeather(WeatherPOJO weatherPOJO) {
+    public void showWeather(WeatherVO weatherPOJO) {
         this.city_weather.setText(weatherPOJO.city_weather);
         this.city_weather_temperature.setText(weatherPOJO.city_weather_temperature);
         this.week.setText(weatherPOJO.week);

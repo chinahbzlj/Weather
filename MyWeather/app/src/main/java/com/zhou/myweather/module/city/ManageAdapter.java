@@ -1,23 +1,17 @@
 package com.zhou.myweather.module.city;
 
 import android.content.Context;
-import android.content.Intent;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zhou.myweather.R;
 import com.zhou.myweather.base.adapter.BaseRecycleViewAdapter;
 import com.zhou.myweather.base.adapter.BaseRecycleViewHoldler;
-import com.zhou.myweather.model.WeatherInfoManager;
 import com.zhou.myweather.module.main.CityManagerListenerManager;
-import com.zhou.myweather.module.main.weather.WeatherPOJO;
-import com.zhou.myweather.module.weather.AddCityActivity;
-import com.zhou.myweather.net.CityAllWeatherInfoDTO;
+import com.zhou.myweather.db.WeatherVO;
 import com.zhou.myweather.util.ToastUtil;
 
 import java.util.List;
@@ -27,10 +21,10 @@ import java.util.List;
  */
 
 public class ManageAdapter extends BaseRecycleViewAdapter<ManageAdapter.ViewHolder> {
-    private List<WeatherPOJO> weatherPOJOS;
+    private List<WeatherVO> weatherPOJOS;
     private Context mContext;
 
-    public ManageAdapter(List<WeatherPOJO> weatherPOJOS) {
+    public ManageAdapter(List<WeatherVO> weatherPOJOS) {
         this.weatherPOJOS = weatherPOJOS;
     }
 

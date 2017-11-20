@@ -86,8 +86,8 @@ public class ItemWeatherFragment extends TabBaseFragment implements ItemWeatherF
     SwipeRefreshLayout refresh;
     private String city;
     private ItemWeatherFragmentPresenterImpl itemWeatherFragmentPresenterImpl;
-//    private List<ForecastDTO> list;
-//    private ForecastDTO forecastDTO;
+//    private List<ForecastPO> list;
+//    private ForecastPO forecastDTO;
 //    private CityInfoDTO cityInfoDTO;
 //    private List<AqiDetailDTO> aqiDetailDTOs;
 //    private List<NowStateDTO> nowStateDTOs;
@@ -260,7 +260,7 @@ public class ItemWeatherFragment extends TabBaseFragment implements ItemWeatherF
 
     private void addView() {
 //        forecasts.removeAllViews();
-//        for (ForecastDTO forecastDTO : list) {
+//        for (ForecastPO forecastDTO : list) {
 //            View v = LayoutInflater.from(getActivity()).inflate(R.layout.item_forecast, null);
 //            ((TextView) v.findViewById(R.id.item_forecast_week)).setText(StringUtils.getWeek(forecastDTO.weekday));
 //            ((TextView) v.findViewById(R.id.forecast_highest_temperatures)).setText(forecastDTO.day_air_temperature);

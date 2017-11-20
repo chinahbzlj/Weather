@@ -1,6 +1,7 @@
 package com.zhou.myweather.sdk.model.dto;
 
 
+import com.zhou.myweather.db.dto.ForecastPO;
 import com.zhou.myweather.sdk.defines.Config;
 
 import org.json.JSONObject;
@@ -136,5 +137,23 @@ public class ForecastDTO {
         }
         this.name = name;
         this.order = order;
+    }
+
+    public ForecastDTO(ForecastPO forecastDTO) {
+        this.name = forecastDTO.name;
+        this.weekday = forecastDTO.weekday;
+        this.day_air_temperature = forecastDTO.day_air_temperature;
+        this.day_weather_pic = forecastDTO.day_weather_pic;
+        this.night_air_temperature = forecastDTO.night_air_temperature;
+    }
+
+    public ForecastPO toForecastDTO() {
+        ForecastPO forecastDTO = new ForecastPO();
+        forecastDTO.name = this.name;
+        forecastDTO.weekday = this.weekday;
+        forecastDTO.day_air_temperature = this.day_air_temperature;
+        forecastDTO.day_weather_pic = this.day_weather_pic;
+        forecastDTO.night_air_temperature = this.night_air_temperature;
+        return forecastDTO;
     }
 }

@@ -1,11 +1,8 @@
 package com.zhou.myweather.model;
 
-import com.zhou.myweather.module.main.weather.WeatherPOJO;
-import com.zhou.myweather.net.CityAllWeatherInfoDTO;
-import com.zhou.myweather.util.LogcatUtil;
+import com.zhou.myweather.db.WeatherVO;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -17,7 +14,7 @@ import java.util.Map;
 
 public class WeatherInfoManager {
     private static WeatherInfoManager weatherInfoManager;
-    private Map<String, WeatherPOJO> weatherInfoDTOHashMap;
+    private Map<String, WeatherVO> weatherInfoDTOHashMap;
 
     private WeatherInfoManager() {
         weatherInfoDTOHashMap = new LinkedHashMap<>();
@@ -34,19 +31,19 @@ public class WeatherInfoManager {
         return weatherInfoManager;
     }
 
-    public Map<String, WeatherPOJO> getWeatherInfoDTOHashMap() {
+    public Map<String, WeatherVO> getWeatherInfoDTOHashMap() {
         return weatherInfoDTOHashMap;
     }
 
-    public List<WeatherPOJO> getWeatherMap() {
-        List<WeatherPOJO> weatherPOJOS = new ArrayList<>();
+    public List<WeatherVO> getWeatherMap() {
+        List<WeatherVO> weatherPOJOS = new ArrayList<>();
         weatherPOJOS.addAll(weatherInfoDTOHashMap.values());
         return weatherPOJOS;
     }
 
     public boolean removePOJO(int position) {
-        WeatherPOJO weatherPOJO = getWeatherMap().get(position);
-        Iterator<WeatherPOJO> it = getWeatherMap().iterator();
+        WeatherVO weatherPOJO = getWeatherMap().get(position);
+        Iterator<WeatherVO> it = getWeatherMap().iterator();
         while (it.hasNext()) {
             if (it.next().city_name.equals(weatherPOJO.city_name)) {
                 it.remove();
@@ -57,12 +54,12 @@ public class WeatherInfoManager {
         return false;
     }
 
-    public void addCityWeather(WeatherPOJO weatherPOJO) {
+    public void addCityWeather(WeatherVO weatherPOJO) {
         weatherInfoDTOHashMap.put(weatherPOJO.city_name, weatherPOJO);
     }
 
-    public WeatherPOJO getWeatherPOJO(String cityName) {
-        WeatherPOJO weatherPOJO = weatherInfoDTOHashMap.get(cityName);
+    public WeatherVO getWeatherPOJO(String cityName) {
+        WeatherVO weatherPOJO = weatherInfoDTOHashMap.get(cityName);
         return weatherPOJO;
     }
 
