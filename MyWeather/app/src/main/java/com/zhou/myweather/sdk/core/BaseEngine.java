@@ -1,1 +1,0 @@
-package com.zhou.myweather.sdk.core;public class BaseEngine {	public static final int NET_RECIVED_SUCCESS = 2000;	public static final int NET_RECIVED_FAILURE = 2001;}

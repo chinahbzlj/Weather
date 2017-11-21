@@ -1,6 +1,5 @@
 package com.zhou.myweather.module.main;
 
-import android.content.Intent;
 import android.text.TextUtils;
 
 import com.zhou.myweather.db.WeatherDAO;
@@ -8,7 +7,6 @@ import com.zhou.myweather.db.WeatherVO;
 import com.zhou.myweather.db.dto.ForecastPO;
 import com.zhou.myweather.db.dto.WeatherPO;
 import com.zhou.myweather.model.WeatherInfoManager;
-import com.zhou.myweather.module.weather.AddCityActivity;
 import com.zhou.myweather.util.LogcatUtil;
 
 import java.util.ArrayList;

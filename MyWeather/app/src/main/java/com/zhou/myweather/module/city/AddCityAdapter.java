@@ -1,4 +1,4 @@
-package com.zhou.myweather.module.weather;
+package com.zhou.myweather.module.city;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;

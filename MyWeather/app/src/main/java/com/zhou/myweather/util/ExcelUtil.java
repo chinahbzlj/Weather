@@ -47,8 +47,8 @@ public class ExcelUtil {
                 Cell col6 = sheet.getCell(6, i);
                 Cell col7 = sheet.getCell(7, i);
                 Cell col8 = sheet.getCell(8, i);
-                CityMO cityMO = new CityMO(col0.getContents(), col1.getContents(), col2.getContents(), col3.getContents(), col4.getContents(), col5.getContents(), col6.getContents(), col7.getContents(), col8.getContents());
-                excleInfos.add(cityMO);
+//                CityMO cityMO = new CityMO(col0.getContents(), col1.getContents(), col2.getContents(), col3.getContents(), col4.getContents(), col5.getContents(), col6.getContents(), col7.getContents(), col8.getContents());
+//                excleInfos.add(cityMO);
 //                if (TextUtils.isEmpty(col2.getContents()))// 如果id为空，则这一行肯定没有数据，不需要入库
 //                    continue;
 //                ExcelInfo excleInfo = null;

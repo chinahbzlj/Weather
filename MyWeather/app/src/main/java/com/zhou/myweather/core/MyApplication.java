@@ -8,7 +8,6 @@ import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 import com.zhou.myweather.db.WeatherDAO;
 import com.zhou.myweather.util.LeHandler;
-import com.zhou.myweather.sdk.core.VolleySingleton;
 import com.zhou.myweather.util.ToastUtil;
 
 /**
@@ -16,7 +15,6 @@ import com.zhou.myweather.util.ToastUtil;
  */
 public class MyApplication extends Application {
     private static MyApplication myApplication = null;
-    public VolleySingleton volleySingleton;
 
     public static MyApplication getInstance() {
         return myApplication;

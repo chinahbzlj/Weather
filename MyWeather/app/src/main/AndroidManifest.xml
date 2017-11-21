@@ -45,14 +45,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".module.weather.AddCityActivity" />
+        <activity android:name=".module.city.AddCityActivity" />
         <activity android:name=".module.weather.EditCityActivity" />
         <activity android:name=".module.PermissionsActivity" />
-        <activity android:name=".module.TestActivity" />
-        <activity
-            android:name=".module.main.MainActivity2"
-            android:label="@string/title_activity_main3"
-            android:theme="@style/AppTheme" />
         <activity android:name=".module.city.ManageCityActivity" android:launchMode="singleTop"/>
         <activity android:name=".module.setting.SettingActivity" />
     </application>

@@ -13,7 +13,6 @@ import com.zhou.myweather.base.BaseActivity;
 import com.zhou.myweather.model.WeatherInfoManager;
 import com.zhou.myweather.module.main.Main4Activity;
 import com.zhou.myweather.db.WeatherVO;
-import com.zhou.myweather.module.weather.AddCityActivity;
 import com.zhou.myweather.util.LogcatUtil;
 import com.zhou.myweather.widget.SwipeItemLayout;
 

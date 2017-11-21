@@ -2,15 +2,7 @@ package com.zhou.myweather.core;
 
 import android.content.Context;
 
-import com.zhou.myweather.model.DatabaseHelper;
-import com.zhou.myweather.model.dao.CityInfoDao;
-import com.zhou.myweather.model.dao.CityWeatherDao;
-import com.zhou.myweather.model.dao.ForecastDao;
-import com.zhou.myweather.model.datas.DataFoecast;
-import com.zhou.myweather.model.datas.DataLocalCity;
-import com.zhou.myweather.model.datas.DataLocalWeather;
-import com.zhou.myweather.sdk.core.HttpEngine;
-import com.zhou.myweather.sdk.core.VolleySingleton;
+
 import com.zhou.myweather.sdk.defines.Config;
 
 /**
@@ -32,10 +24,6 @@ public class PBGlobal {
     public static String needHourData = Config.OFF;
     private static PBGlobal pbGlobal = null;
     private Context appContext;
-    private DataLocalCity dataLocalCity;
-    private DataLocalWeather dataLocalWeather;
-    private DataFoecast dataFoecast;
-
     private PBGlobal() {
     }
 
@@ -53,31 +41,8 @@ public class PBGlobal {
 
     public void init(Context appContext) {
         this.appContext = appContext;
-        DatabaseHelper.initDataBase(appContext);
-        dataLocalCity = new DataLocalCity();
-        dataLocalCity.setAllLocalCitys(CityInfoDao.queryAllCity());
-        dataLocalWeather = new DataLocalWeather();
-        dataLocalWeather.setAllLocalWeathers(CityWeatherDao.queryAllCity());
-        dataFoecast = new DataFoecast();
-        dataFoecast.setAllForecast(ForecastDao.queryAllCity());
     }
 
-    public DataLocalCity getDataLocalCity() {
-        return dataLocalCity;
-    }
-
-    public DataLocalWeather getDataLocalWeather() {
-        return dataLocalWeather;
-    }
-    public DataFoecast getDataFoecast(){return dataFoecast;}
-
-    public VolleySingleton getVolley() {
-        return MyApplication.getInstance().volleySingleton;
-    }
-
-    public HttpEngine getHttpEngine() {
-        return HttpEngine.getEngine();
-    }
 
     public void setAppContext(Context context) {
         this.appContext = context;
@@ -87,7 +52,4 @@ public class PBGlobal {
         return this.appContext;
     }
 
-    public void exitSystem() {
-        DatabaseHelper.getDBHelper().close();
-    }
 }

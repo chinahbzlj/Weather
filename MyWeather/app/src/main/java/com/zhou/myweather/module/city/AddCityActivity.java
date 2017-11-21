@@ -1,44 +1,29 @@
-package com.zhou.myweather.module.weather;
+package com.zhou.myweather.module.city;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.zhou.myweather.R;
 import com.zhou.myweather.base.BaseActivity;
 import com.zhou.myweather.base.adapter.BaseRecycleViewAdapter;
 import com.zhou.myweather.model.HotCityModel;
 import com.zhou.myweather.model.WeatherInfoManager;
-import com.zhou.myweather.model.dao.CityDao;
-import com.zhou.myweather.model.dao.CityInfoDao;
-import com.zhou.myweather.model.mos.CityMO;
-import com.zhou.myweather.model.mos.LocalCityInfoMO;
+import com.zhou.myweather.module.weather.EditChangeListener;
+import com.zhou.myweather.module.weather.MyItemDecoration;
 import com.zhou.myweather.module.weather.adapter.CitysAdapter;
 import com.zhou.myweather.module.weather.adapter.HotCityAdapter;
-import com.zhou.myweather.sdk.core.HttpEngine;
-import com.zhou.myweather.sdk.defines.protocol.IServiceResponse;
-import com.zhou.myweather.sdk.model.dto.AttributionDTO;
-import com.zhou.myweather.sdk.model.response.QueryAreaIdForAreaResponse;
 import com.zhou.myweather.util.ActivityUtils;
-import com.zhou.myweather.util.LogUtil;
-import com.zhou.myweather.util.LogcatUtil;
 import com.zhou.myweather.util.ToastUtil;
-
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -46,7 +31,7 @@ import butterknife.OnClick;
 /**
  * Created by Powerbee on 2016/5/20.
  */
-public class AddCityActivity extends BaseActivity implements HttpEngine.HttpRequestListener {
+public class AddCityActivity extends BaseActivity  {
     private Context mContext = AddCityActivity.this;
     @Bind(R.id.icon_cancel)
     ImageView iconCancel;
@@ -115,8 +100,8 @@ public class AddCityActivity extends BaseActivity implements HttpEngine.HttpRequ
                 super.afterTextChanged(s);
                 //搜索城市
 //                List<CityMO> cityMOs = CityDao.queryCityForName(s.toString().trim());
-                List<CityMO> cityMOs = CityDao.queryCity(s.toString().trim());
-                LogUtil.e("查询到的城市数量", cityMOs.size() + "");
+//                List<CityMO> cityMOs = CityDao.queryCity(s.toString().trim());
+//                LogUtil.e("查询到的城市数量", cityMOs.size() + "");
 //                adapter.setData(cityMOs);
             }
         });
@@ -127,22 +112,22 @@ public class AddCityActivity extends BaseActivity implements HttpEngine.HttpRequ
 
     }
 
-    @Override
-    public void responseResult(IServiceResponse response) {
-        if (response instanceof QueryAreaIdForAreaResponse) {
-            List<AttributionDTO> list = ((QueryAreaIdForAreaResponse) response).attributionDTOs;
-            if (list.size() != 0) {
-                LocalCityInfoMO cityInfoMO = new LocalCityInfoMO(list.get(0).cityInfoDTO);
-                CityInfoDao.addOrUpdate(cityInfoMO);
-                Intent intent = new Intent();
-                intent.putExtra("LocalCityInfoMO", cityInfoMO);
-                setResult(1001, intent);
-                dismissLoading();
-                finish();
-
-            }
-        }
-    }
+//    @Override
+//    public void responseResult(IServiceResponse response) {
+//        if (response instanceof QueryAreaIdForAreaResponse) {
+//            List<AttributionDTO> list = ((QueryAreaIdForAreaResponse) response).attributionDTOs;
+//            if (list.size() != 0) {
+//                LocalCityInfoMO cityInfoMO = new LocalCityInfoMO(list.get(0).cityInfoDTO);
+////                CityInfoDao.addOrUpdate(cityInfoMO);
+//                Intent intent = new Intent();
+//                intent.putExtra("LocalCityInfoMO", cityInfoMO);
+//                setResult(1001, intent);
+//                dismissLoading();
+//                finish();
+//
+//            }
+//        }
+//    }
 
     @Override
     public void onBackPressed() {
