@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao' // apply plugin
 repositories {
     flatDir {
         dir 'libs'
@@ -46,7 +47,18 @@ android {
         }
     }
 }
+greendao {
+    //指定数据库schema版本号，迁移等操作会用到
+    schemaVersion 2
 
+    //DaoSession、DaoMaster以及所有实体类的dao生成的目录,默认为你的entity所在的包名
+    //daoPackage 包名
+    daoPackage 'com.zhou.myweather'
+
+    //这就是我们上面说到的自定义生成数据库文件的目录了，可以将生成的文件放到我们的java目录中，而不是build中，这样就不用额外的设置资源目录了
+    //工程路径
+    targetGenDir 'src/main/java'
+}
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
@@ -73,5 +85,7 @@ dependencies {
     compile files('libs/ormlite-core-4.48.jar')
     compile files('libs/jxl.jar')
     compile 'com.mylhyl:acp:1.0.0'
+    compile 'net.zetetic:android-database-sqlcipher:3.5.7'
+    compile 'org.greenrobot:greendao:3.2.2' // add library
     compile project(':DatePicker')
 }

@@ -7,6 +7,7 @@ import com.zhou.myweather.core.MyApplication;
 import com.zhou.myweather.db.WeatherDAO;
 import com.zhou.myweather.db.WeatherVO;
 import com.zhou.myweather.db.dto.ForecastPO;
+import com.zhou.myweather.db.dto.WeatherPO;
 import com.zhou.myweather.model.WeatherInfoManager;
 import com.zhou.myweather.module.main.weather.WeatherContract.Persenter;
 import com.zhou.myweather.net.CityAllWeatherInfoDTO;
@@ -43,17 +44,7 @@ public class WeatherPersenter implements Persenter {
     public void start() {
     }
 
-
-    @Override
-    public void getWeather() {
-        final WeatherVO weatherPOJOTmp = WeatherInfoManager.getWeatherInfoManager().getWeatherPOJO(city);
-        if (weatherPOJOTmp != null) {
-            view.showWeather(weatherPOJOTmp);
-            if (!TimeUtil.needRefresh(TimeUtil.getSystem(), weatherPOJOTmp.time, city, weatherPOJOTmp.city_name)) {
-//            view.showWeather(weatherPOJO);
-                return;
-            }
-        }
+    public void get() {
         if (compositeSubscription.isUnsubscribed())
             compositeSubscription = new CompositeSubscription();
         compositeSubscription.add(
@@ -69,17 +60,17 @@ public class WeatherPersenter implements Persenter {
 
                             @Override
                             public void onError(Throwable e) {
-                                LogcatUtil.d("请求错误："+e.getMessage());
+                                LogcatUtil.d("请求错误：" + e.getMessage());
                             }
 
                             @Override
                             public void onNext(CityAllWeatherInfoDTO weatherDTO) {
                                 LogcatUtil.d(JSONHelper.toJson(weatherDTO));
                                 if (weatherDTO.showapi_res_code == 0) {
-                                    weatherPOJO = new WeatherVO(weatherDTO);
+                                    weatherPOJO = new WeatherVO(city, weatherDTO);
                                     WeatherInfoManager.getWeatherInfoManager().addCityWeather(weatherPOJO);
                                     WeatherDAO.getWeatherDAO().insertWeather(weatherPOJO.toWeatherPO());
-                                    WeatherDAO.getWeatherDAO().insertForecastPO(weatherPOJO.getForecastPOs());
+                                    WeatherDAO.getWeatherDAO().insertForecastPO(weatherPOJO.city_name, weatherPOJO.getForecastPOs());
                                     view.showWeather(weatherPOJO);
                                 } else {
                                     ToastUtil.getInstance().toastShowS(weatherDTO.showapi_res_error);
@@ -88,6 +79,27 @@ public class WeatherPersenter implements Persenter {
                             }
                         })
         );
+    }
+
+    public void show(WeatherVO weatherVO) {
+        view.showWeather(weatherVO);
+        if (!TimeUtil.needRefresh(TimeUtil.getSystem(), weatherVO.localTime)) {
+            return;
+        }
+        LogcatUtil.d("信息过期，需要重新获取");
+        get();
+    }
+
+    @Override
+    public void getWeather() {
+        WeatherVO weatherPOJOTmp = WeatherInfoManager.getWeatherInfoManager().getWeatherPOJO(city);
+        if (weatherPOJOTmp == null) {
+            WeatherPO weatherPO = WeatherDAO.getWeatherDAO().getWeatherPO(city);
+            if (weatherPO != null) {
+                weatherPOJOTmp = new WeatherVO(weatherPO, WeatherDAO.getWeatherDAO().getForecastOPS(city));
+                show(weatherPOJOTmp);
+            } else get();
+        } else show(weatherPOJOTmp);
     }
 
     @Override

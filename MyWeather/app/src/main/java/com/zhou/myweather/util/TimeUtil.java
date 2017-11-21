@@ -25,22 +25,14 @@ public class TimeUtil {
         SimpleDateFormat oldSimpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
         long min = 0;
         try {
-            LogcatUtil.d(newSimpleDateFormat.parse(newTime).toString() + " " + oldSimpleDateFormat.parse(oldTime).toString());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        try {
             Date newDate = newSimpleDateFormat.parse(newTime);
             Date oldDate = oldSimpleDateFormat.parse(oldTime);
             long diff = newDate.getTime() - oldDate.getTime();
-            long nd = 1000 * 24 * 60 * 60;
-            long nh = 1000 * 60 * 60;
             long nm = 1000 * 60;
-            min = diff % nd % nh / nm;
+            min = diff / nm;
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        LogcatUtil.d("时间差" + min);
         return min > 30 ? true : false;
     }
 
@@ -48,11 +40,11 @@ public class TimeUtil {
         SimpleDateFormat newSimpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
         SimpleDateFormat oldSimpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
         long min = 0;
-        try {
-            LogcatUtil.d(newSimpleDateFormat.parse(newTime).toString() + " " + oldSimpleDateFormat.parse(oldTime).toString() + " " + cityName + " " + city);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            LogcatUtil.d(newSimpleDateFormat.parse(newTime).toString() + " " + oldSimpleDateFormat.parse(oldTime).toString() + " " + cityName + " " + city);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
         try {
             Date newDate = newSimpleDateFormat.parse(newTime);
             Date oldDate = oldSimpleDateFormat.parse(oldTime);
@@ -61,6 +53,8 @@ public class TimeUtil {
             long nh = 1000 * 60 * 60;
             long nm = 1000 * 60;
             min = diff % nd % nh / nm;
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            LogcatUtil.d(simpleDateFormat.format(newDate) + " " + simpleDateFormat.format(oldDate));
         } catch (ParseException e) {
             e.printStackTrace();
         }

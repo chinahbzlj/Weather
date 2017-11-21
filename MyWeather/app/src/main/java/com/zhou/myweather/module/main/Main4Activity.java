@@ -1,5 +1,6 @@
 package com.zhou.myweather.module.main;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.widget.Toolbar;
 
@@ -13,15 +14,17 @@ import android.widget.TextView;
 
 import com.zhou.myweather.R;
 import com.zhou.myweather.base.BaseActivity;
-import com.zhou.myweather.model.WeatherInfoManager;
 import com.zhou.myweather.module.city.ManageCityActivity;
 import com.zhou.myweather.module.main.adapter.CityWeatherAdapter;
 import com.zhou.myweather.module.setting.SettingActivity;
 import com.zhou.myweather.module.weather.AddCityActivity;
+import com.zhou.myweather.util.ActivityUtils;
 import com.zhou.myweather.util.LogcatUtil;
+import com.zhou.myweather.util.ToastUtil;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Main4Activity extends BaseActivity implements MainContract.View, CityManagerListener {
 
@@ -31,12 +34,18 @@ public class Main4Activity extends BaseActivity implements MainContract.View, Ci
     private ViewPager mViewPager;
     private TextView titleTextView;
     private CityWeatherAdapter adapter;
-    private List<String> citys = new ArrayList<>();
+    private MainContract.Persenter persenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main4);
+        initView();
+        new Main4Persenter(this);
+        persenter.start();
+    }
+
+    private void initView() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
@@ -57,7 +66,7 @@ public class Main4Activity extends BaseActivity implements MainContract.View, Ci
 
             @Override
             public void onPageSelected(int position) {
-                setTitle(citys.get(position));
+                persenter.setPosition(position);
             }
 
             @Override
@@ -66,16 +75,40 @@ public class Main4Activity extends BaseActivity implements MainContract.View, Ci
             }
         });
         titleTextView = (TextView) findViewById(R.id.title);
-        adapter.setCitys(citys);
-        if (citys.size() == 0)
-            startActivityForResult(new Intent(this, AddCityActivity.class), ADD_CITY);
-        else setTitle(citys.get(0));
 
+        //监听删除城市的动作。
         CityManagerListenerManager.getCityManagerListenerManager().setCityManagerListener(this);
     }
 
-    private void setTitle(String title) {
+    /**
+     * 跳转到添加城市界面
+     */
+    @Override
+    public void addCity() {
+        startActivityForResult(new Intent(this, AddCityActivity.class), ADD_CITY);
+    }
+
+    @Override
+    public void notifyAdapter() {
+//        if (adapter != null)
+            adapter.notifyDataSetChanged();
+//        else LogcatUtil.d("没有初始化");
+    }
+
+    @Override
+    public void setTitle(String title) {
         titleTextView.setText(title);
+    }
+
+    @Override
+    public void setCitys(List<String> citys) {
+        adapter.setCitys(citys);
+    }
+
+
+    @Override
+    public void setCurrentItem(int item) {
+        mViewPager.setCurrentItem(item, false);
     }
 
     @Override
@@ -103,7 +136,7 @@ public class Main4Activity extends BaseActivity implements MainContract.View, Ci
 
     @Override
     public void setPersenter(MainContract.Persenter persenter) {
-
+        this.persenter = persenter;
     }
 
     @Override
@@ -113,28 +146,29 @@ public class Main4Activity extends BaseActivity implements MainContract.View, Ci
         if (resultCode == RESULT_OK) {
             if (requestCode == Main4Activity.ADD_CITY && data != null) {
                 String cityName = data.getStringExtra(AddCityActivity.CITY_NAME);
-                if (!TextUtils.isEmpty(cityName)) addCity(cityName);
+                persenter.addCity(cityName);
             }
         }
     }
 
-    public void addCity(String cityName) {
-        setTitle(cityName);
-        WeatherInfoManager.getWeatherInfoManager().addCity(cityName);
-        citys.add(cityName);
-        adapter.notifyDataSetChanged();
-        mViewPager.setCurrentItem(WeatherInfoManager.getWeatherInfoManager().getCitys().size(), false);
-    }
-
     @Override
     public void removeCity(int position) {
-        if (position == -1) return;
-        citys.remove(position);
-        WeatherInfoManager.getWeatherInfoManager().remove(position);
-        adapter.notifyDataSetChanged();
-        mViewPager.setCurrentItem(position, false);
+        persenter.removeCity(position);
+    }
 
-        if (position == 0) setTitle("");
-        else setTitle(citys.get(position - 1));
+    private static boolean mBackKeyPressed = false;//记录是否有首次按键
+
+    @Override
+    public void onBackPressed() {
+        if (!mBackKeyPressed) {
+            ToastUtil.getInstance().toastShowS("再按一次退出应用");
+            mBackKeyPressed = true;
+            new Timer().schedule(new TimerTask() {//延时两秒，如果超出则擦错第一次按键记录
+                @Override
+                public void run() {
+                    mBackKeyPressed = false;
+                }
+            }, 2000);
+        } else ActivityUtils.getActivityUtils().exit();
     }
 }

@@ -12,6 +12,7 @@ import com.zhou.myweather.base.adapter.BaseRecycleViewAdapter;
 import com.zhou.myweather.base.adapter.BaseRecycleViewHoldler;
 import com.zhou.myweather.module.main.CityManagerListenerManager;
 import com.zhou.myweather.db.WeatherVO;
+import com.zhou.myweather.util.LogcatUtil;
 import com.zhou.myweather.util.ToastUtil;
 
 import java.util.List;
@@ -41,11 +42,12 @@ public class ManageAdapter extends BaseRecycleViewAdapter<ManageAdapter.ViewHold
         super.onBindViewHolder(viewHolder, position);
         if (weatherPOJOS == null || weatherPOJOS.get(position) == null) {
             viewHolder.tvCityMsg.setVisibility(View.VISIBLE);
-            ToastUtil.getInstance().toastShowS("跳转");
+//            ToastUtil.getInstance().toastShowS("跳转");
+            LogcatUtil.d("改城市的信息为空");
             return;
         }
         viewHolder.tvCityWeather.setText(weatherPOJOS.get(position).city_weather);
-        viewHolder.tvCityTemperature.setText(weatherPOJOS.get(position).city_weather_temperature);
+        viewHolder.tvCityTemperature.setText(weatherPOJOS.get(position).city_weather_temperature + "°");
         viewHolder.tvCityName.setText(weatherPOJOS.get(position).city_name);
     }
 

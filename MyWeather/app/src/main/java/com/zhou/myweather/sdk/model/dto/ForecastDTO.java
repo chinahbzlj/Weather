@@ -139,12 +139,12 @@ public class ForecastDTO {
         this.order = order;
     }
 
-    public ForecastDTO(ForecastPO forecastDTO) {
-        this.name = forecastDTO.name;
-        this.weekday = forecastDTO.weekday;
-        this.day_air_temperature = forecastDTO.day_air_temperature;
-        this.day_weather_pic = forecastDTO.day_weather_pic;
-        this.night_air_temperature = forecastDTO.night_air_temperature;
+    public ForecastDTO(ForecastPO forecastPO) {
+        this.name = forecastPO.name;
+        this.weekday = forecastPO.weekday;
+        this.day_air_temperature = forecastPO.day_air_temperature;
+        this.day_weather_pic = forecastPO.day_weather_pic;
+        this.night_air_temperature = forecastPO.night_air_temperature;
     }
 
     public ForecastPO toForecastDTO() {
