@@ -69,6 +69,13 @@ public class WeatherDAO {
         return weatherPOS.get(0);
     }
 
+    public void deleteWeather(String city_name) {
+        QueryBuilder<WeatherPO> weatherPOQueryBuilder = getDaoSession().getWeatherPODao().queryBuilder();
+        weatherPOQueryBuilder.where(new WhereCondition.StringCondition("CITY_NAME = '" + city_name + "'")).buildDelete().executeDeleteWithoutDetachingEntities();
+        QueryBuilder<ForecastPO> forecastPOQueryBuilder = getDaoSession().getForecastPODao().queryBuilder();
+        forecastPOQueryBuilder.where(new WhereCondition.StringCondition("NAME = '" + city_name + "'")).buildDelete().executeDeleteWithoutDetachingEntities();
+    }
+
     public List<ForecastPO> getForecastOPS(String city_name) {
         QueryBuilder<ForecastPO> forecastPOQueryBuilder = getDaoSession().getForecastPODao().queryBuilder();
         List<ForecastPO> forecastPOS = forecastPOQueryBuilder.where(new WhereCondition.StringCondition("NAME = '" + city_name + "'")).list();

@@ -11,7 +11,7 @@ import android.view.View;
 import com.zhou.myweather.R;
 import com.zhou.myweather.base.BaseActivity;
 import com.zhou.myweather.model.WeatherInfoManager;
-import com.zhou.myweather.module.main.Main4Activity;
+import com.zhou.myweather.module.main.MainActivity;
 import com.zhou.myweather.db.WeatherVO;
 import com.zhou.myweather.util.LogcatUtil;
 import com.zhou.myweather.widget.SwipeItemLayout;
@@ -39,14 +39,13 @@ public class ManageCityActivity extends BaseActivity implements ManageCityContra
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
         recyclerView.addOnItemTouchListener(new SwipeItemLayout.OnSwipeItemTouchListener(this));
-        weatherPOJOS = WeatherInfoManager.getWeatherInfoManager().getWeatherMap();
-        recyclerView.setAdapter(new ManageAdapter(weatherPOJOS));
+
         recyclerView.setItemAnimator(new DefaultItemAnimator() {
             @Override
             public void onAnimationFinished(RecyclerView.ViewHolder viewHolder) {
                 super.onAnimationFinished(viewHolder);
                 if (WeatherInfoManager.getWeatherInfoManager().getWeatherMap().size() == 0) {
-                    startActivityForResult(new Intent(ManageCityActivity.this, AddCityActivity.class), Main4Activity.ADD_CITY);
+                    startActivityForResult(new Intent(ManageCityActivity.this, AddCityActivity.class), MainActivity.ADD_CITY);
                     weatherPOJOS.clear();
                 }
             }
@@ -55,7 +54,7 @@ public class ManageCityActivity extends BaseActivity implements ManageCityContra
         findViewById(R.id.add_city).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(ManageCityActivity.this, AddCityActivity.class), Main4Activity.ADD_CITY);
+                startActivityForResult(new Intent(ManageCityActivity.this, AddCityActivity.class), MainActivity.ADD_CITY);
             }
         });
         findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
@@ -67,6 +66,13 @@ public class ManageCityActivity extends BaseActivity implements ManageCityContra
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        weatherPOJOS = WeatherInfoManager.getWeatherInfoManager().getWeatherMap();
+        recyclerView.setAdapter(new ManageAdapter(weatherPOJOS));
+    }
+
+    @Override
     public void setPersenter(ManageCityContract.Persenter persenter) {
         this.persenter = persenter;
     }
@@ -75,7 +81,7 @@ public class ManageCityActivity extends BaseActivity implements ManageCityContra
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         LogcatUtil.d(resultCode);
-        if (resultCode == RESULT_OK && requestCode == Main4Activity.ADD_CITY) {
+        if (resultCode == RESULT_OK && requestCode == MainActivity.ADD_CITY) {
             String cityName = data.getStringExtra(AddCityActivity.CITY_NAME);
             if (!TextUtils.isEmpty(cityName)) {
                 Intent intent = new Intent();

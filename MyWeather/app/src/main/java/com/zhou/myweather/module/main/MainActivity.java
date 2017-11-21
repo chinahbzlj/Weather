@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Main4Activity extends BaseActivity implements MainContract.View, CityManagerListener {
+public class MainActivity extends BaseActivity implements MainContract.View, CityManagerListener {
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -39,7 +39,7 @@ public class Main4Activity extends BaseActivity implements MainContract.View, Ci
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main4);
         initView();
-        new Main4Persenter(this);
+        new MainPersenter(this);
         persenter.start();
     }
 
@@ -142,7 +142,7 @@ public class Main4Activity extends BaseActivity implements MainContract.View, Ci
         super.onActivityResult(requestCode, resultCode, data);
         LogcatUtil.d(resultCode);
         if (resultCode == RESULT_OK) {
-            if (requestCode == Main4Activity.ADD_CITY && data != null) {
+            if (requestCode == MainActivity.ADD_CITY && data != null) {
                 String cityName = data.getStringExtra(AddCityActivity.CITY_NAME);
                 persenter.addCity(cityName);
             }

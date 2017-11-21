@@ -16,11 +16,11 @@ import java.util.List;
  * Created by 周利杰 on 17-11-21.
  */
 
-public class Main4Persenter implements MainContract.Persenter {
+public class MainPersenter implements MainContract.Persenter {
     private MainContract.View view;
     private List<String> citys;
 
-    public Main4Persenter(MainContract.View view) {
+    public MainPersenter(MainContract.View view) {
         this.view = view;
         this.view.setPersenter(this);
         this.citys = new ArrayList<>();
@@ -51,6 +51,7 @@ public class Main4Persenter implements MainContract.Persenter {
     @Override
     public void setPosition(int position) {
         view.setTitle(citys.get(position));
+        item = position;
     }
 
     @Override
@@ -66,17 +67,34 @@ public class Main4Persenter implements MainContract.Persenter {
         view.notifyAdapter();
         WeatherInfoManager.getWeatherInfoManager().addCity(cityName);
         view.setCurrentItem(WeatherInfoManager.getWeatherInfoManager().getCitys().size());
+        item = WeatherInfoManager.getWeatherInfoManager().getCitys().size();
     }
+
+    private int item = 0;
 
     @Override
     public void removeCity(int position) {
         if (position == -1) return;
+        WeatherDAO.getWeatherDAO().deleteWeather(citys.get(position));
         citys.remove(position);
         WeatherInfoManager.getWeatherInfoManager().remove(position);
         view.notifyAdapter();
-        view.setCurrentItem(position);
-        if (position == 0) view.setTitle("");
-        else view.setTitle(citys.get(position - 1));
+
+        if (position < citys.size()) {
+//            view.setTitle(citys.get(item));
+        } else {
+            if (item < position) {
+
+            } else
+                item = position - 1;
+        }
+        view.setTitle(citys.get(item));
+        view.setCurrentItem(item);
+//        if (position == 0)
+//        if (position < citys.size())
+//            view.setTitle(citys.get(position));
+//        else view.setTitle(citys.get(position - 1));
+//        else view.setTitle(citys.get(position - 1));
     }
 
 }
