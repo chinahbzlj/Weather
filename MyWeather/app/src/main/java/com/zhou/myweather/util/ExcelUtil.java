@@ -1,5 +1,6 @@
 package com.zhou.myweather.util;
 
+import com.zhou.myweather.db.dto.CityPO;
 import com.zhou.myweather.model.mos.CityMO;
 
 import java.io.File;
@@ -17,11 +18,12 @@ import jxl.Workbook;
 public class ExcelUtil {
     private static final String TAG = "ExcelUtil";
 
-    public static List<CityMO> readCityExcelFile(InputStream inputStream) {
-        if(inputStream == null){
-            LogUtil.e("ExcelUtil","读取文件出错");
+    public static List<CityPO> readCityExcelFile(InputStream inputStream) {
+        if (inputStream == null) {
+            LogUtil.e("ExcelUtil", "读取文件出错");
             return null;
         }
+        List<CityPO> excleInfos = new ArrayList<CityPO>();
         try {
             Workbook wb = Workbook.getWorkbook(inputStream);
             Sheet sheet = wb.getSheet(0);
@@ -36,7 +38,6 @@ public class ExcelUtil {
                 LogUtil.w(TAG, "文件中没有数据");
                 return null;
             }
-            List<CityMO> excleInfos = new ArrayList<CityMO>();
             for (int i = 1; i < rowNum; i++) {
                 Cell col0 = sheet.getCell(0, i);
                 Cell col1 = sheet.getCell(1, i);
@@ -47,8 +48,8 @@ public class ExcelUtil {
                 Cell col6 = sheet.getCell(6, i);
                 Cell col7 = sheet.getCell(7, i);
                 Cell col8 = sheet.getCell(8, i);
-//                CityMO cityMO = new CityMO(col0.getContents(), col1.getContents(), col2.getContents(), col3.getContents(), col4.getContents(), col5.getContents(), col6.getContents(), col7.getContents(), col8.getContents());
-//                excleInfos.add(cityMO);
+                CityPO cityPO = new CityPO(col0.getContents().trim(), col1.getContents().trim(), col2.getContents().trim(), col3.getContents().trim(), col4.getContents().trim(), col5.getContents().trim(), col6.getContents().trim(), col7.getContents().trim(), col8.getContents().trim());
+                excleInfos.add(cityPO);
 //                if (TextUtils.isEmpty(col2.getContents()))// 如果id为空，则这一行肯定没有数据，不需要入库
 //                    continue;
 //                ExcelInfo excleInfo = null;
@@ -64,7 +65,7 @@ public class ExcelUtil {
             return excleInfos;
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return excleInfos;
         }
     }
 
@@ -117,8 +118,9 @@ public class ExcelUtil {
             }
             return excleInfos;
         } catch (Exception e) {
+            List<CityMO> excleInfos = new ArrayList<CityMO>();
             e.printStackTrace();
-            return null;
+            return excleInfos;
         }
     }
 }

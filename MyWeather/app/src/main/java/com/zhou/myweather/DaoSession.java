@@ -8,9 +8,11 @@ import org.greenrobot.greendao.database.Database;
 import org.greenrobot.greendao.identityscope.IdentityScopeType;
 import org.greenrobot.greendao.internal.DaoConfig;
 
+import com.zhou.myweather.db.dto.CityPO;
 import com.zhou.myweather.db.dto.WeatherPO;
 import com.zhou.myweather.db.dto.ForecastPO;
 
+import com.zhou.myweather.CityPODao;
 import com.zhou.myweather.WeatherPODao;
 import com.zhou.myweather.ForecastPODao;
 
@@ -23,9 +25,11 @@ import com.zhou.myweather.ForecastPODao;
  */
 public class DaoSession extends AbstractDaoSession {
 
+    private final DaoConfig cityPODaoConfig;
     private final DaoConfig weatherPODaoConfig;
     private final DaoConfig forecastPODaoConfig;
 
+    private final CityPODao cityPODao;
     private final WeatherPODao weatherPODao;
     private final ForecastPODao forecastPODao;
 
@@ -33,22 +37,32 @@ public class DaoSession extends AbstractDaoSession {
             daoConfigMap) {
         super(db);
 
+        cityPODaoConfig = daoConfigMap.get(CityPODao.class).clone();
+        cityPODaoConfig.initIdentityScope(type);
+
         weatherPODaoConfig = daoConfigMap.get(WeatherPODao.class).clone();
         weatherPODaoConfig.initIdentityScope(type);
 
         forecastPODaoConfig = daoConfigMap.get(ForecastPODao.class).clone();
         forecastPODaoConfig.initIdentityScope(type);
 
+        cityPODao = new CityPODao(cityPODaoConfig, this);
         weatherPODao = new WeatherPODao(weatherPODaoConfig, this);
         forecastPODao = new ForecastPODao(forecastPODaoConfig, this);
 
+        registerDao(CityPO.class, cityPODao);
         registerDao(WeatherPO.class, weatherPODao);
         registerDao(ForecastPO.class, forecastPODao);
     }
     
     public void clear() {
+        cityPODaoConfig.clearIdentityScope();
         weatherPODaoConfig.clearIdentityScope();
         forecastPODaoConfig.clearIdentityScope();
+    }
+
+    public CityPODao getCityPODao() {
+        return cityPODao;
     }
 
     public WeatherPODao getWeatherPODao() {

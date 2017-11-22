@@ -29,6 +29,15 @@ public class ManageAdapter extends BaseRecycleViewAdapter<ManageAdapter.ViewHold
         this.weatherPOJOS = weatherPOJOS;
     }
 
+    public ManageAdapter() {
+
+    }
+
+    public void setData(List<WeatherVO> weatherPOJOS) {
+        this.weatherPOJOS = weatherPOJOS;
+        this.notifyDataSetChanged();
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         mContext = parent.getContext();

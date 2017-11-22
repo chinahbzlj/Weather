@@ -79,7 +79,7 @@ public class MainPersenter implements MainContract.Persenter {
         citys.remove(position);
         WeatherInfoManager.getWeatherInfoManager().remove(position);
         view.notifyAdapter();
-
+        LogcatUtil.d(citys.size()+" "+position);
         if (position < citys.size()) {
 //            view.setTitle(citys.get(item));
         } else {
@@ -88,6 +88,7 @@ public class MainPersenter implements MainContract.Persenter {
             } else
                 item = position - 1;
         }
+        if(position == 0) return;
         view.setTitle(citys.get(item));
         view.setCurrentItem(item);
 //        if (position == 0)

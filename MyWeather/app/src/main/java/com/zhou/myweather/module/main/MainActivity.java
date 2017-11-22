@@ -5,6 +5,7 @@ import android.support.v7.widget.Toolbar;
 
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -89,7 +90,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Cit
     @Override
     public void notifyAdapter() {
 //        if (adapter != null)
-            adapter.notifyDataSetChanged();
+        adapter.notifyDataSetChanged();
 //        else LogcatUtil.d("没有初始化");
     }
 
@@ -144,7 +145,9 @@ public class MainActivity extends BaseActivity implements MainContract.View, Cit
         if (resultCode == RESULT_OK) {
             if (requestCode == MainActivity.ADD_CITY && data != null) {
                 String cityName = data.getStringExtra(AddCityActivity.CITY_NAME);
-                persenter.addCity(cityName);
+                if (!TextUtils.isEmpty(cityName)) persenter.addCity(cityName);
+                String position = data.getStringExtra("item");
+                if (!TextUtils.isEmpty(position)) setCurrentItem(Integer.parseInt(position));
             }
         }
     }

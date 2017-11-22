@@ -1,8 +1,10 @@
 package com.zhou.myweather.module.city;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -10,6 +12,7 @@ import android.view.View;
 
 import com.zhou.myweather.R;
 import com.zhou.myweather.base.BaseActivity;
+import com.zhou.myweather.base.adapter.BaseRecycleViewAdapter;
 import com.zhou.myweather.model.WeatherInfoManager;
 import com.zhou.myweather.module.main.MainActivity;
 import com.zhou.myweather.db.WeatherVO;
@@ -28,18 +31,19 @@ public class ManageCityActivity extends BaseActivity implements ManageCityContra
     private RecyclerView recyclerView;
 
     private List<WeatherVO> weatherPOJOS;
+    private ManageAdapter manageAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting_city);
         new ManageCityPersenter(this);
-
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
         recyclerView.addOnItemTouchListener(new SwipeItemLayout.OnSwipeItemTouchListener(this));
-
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        recyclerView.addItemDecoration(dividerItemDecoration);
         recyclerView.setItemAnimator(new DefaultItemAnimator() {
             @Override
             public void onAnimationFinished(RecyclerView.ViewHolder viewHolder) {
@@ -63,13 +67,25 @@ public class ManageCityActivity extends BaseActivity implements ManageCityContra
 //                startActivity(new Intent(ManageCityActivity.this,));
             }
         });
+        manageAdapter = new ManageAdapter();
+        manageAdapter.setOnItemClickListener(new BaseRecycleViewAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View parent, int position) {
+                LogcatUtil.d("点击"+position);
+                Intent intent = new Intent();
+                intent.putExtra("item", String.valueOf(position));
+                setResult(RESULT_OK, intent);
+                finish();
+            }
+        });
+        recyclerView.setAdapter(manageAdapter);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         weatherPOJOS = WeatherInfoManager.getWeatherInfoManager().getWeatherMap();
-        recyclerView.setAdapter(new ManageAdapter(weatherPOJOS));
+        manageAdapter.setData(weatherPOJOS);
     }
 
     @Override

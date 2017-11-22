@@ -2,13 +2,22 @@ package com.zhou.myweather.core;
 
 import android.app.Application;
 import android.app.Service;
+import android.content.res.AssetManager;
 import android.os.Vibrator;
 
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 import com.zhou.myweather.db.WeatherDAO;
+import com.zhou.myweather.db.dto.CityPO;
+import com.zhou.myweather.model.mos.CityMO;
+import com.zhou.myweather.util.ExcelUtil;
+import com.zhou.myweather.util.FileManagerUtils;
 import com.zhou.myweather.util.LeHandler;
+import com.zhou.myweather.util.LogcatUtil;
 import com.zhou.myweather.util.ToastUtil;
+
+import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by Powerbee on 2016/5/10.
@@ -42,6 +51,19 @@ public class MyApplication extends Application {
 //        SDKInitializer.initialize(getApplicationContext());
         ToastUtil.getInstance().setApplicatonContext(this);
         WeatherDAO.getWeatherDAO().init(this);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    List<CityPO> cityPOS = ExcelUtil.readCityExcelFile(myApplication.getAssets().open("weather_areaid.xls"));
+                    WeatherDAO.getWeatherDAO().insertCity(cityPOS);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
 }

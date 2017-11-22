@@ -3,9 +3,11 @@ package com.zhou.myweather.db;
 import android.app.Application;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.zhou.myweather.CityPODao;
 import com.zhou.myweather.DaoMaster;
 import com.zhou.myweather.DaoSession;
 import com.zhou.myweather.WeatherPODao;
+import com.zhou.myweather.db.dto.CityPO;
 import com.zhou.myweather.db.dto.ForecastPO;
 import com.zhou.myweather.db.dto.WeatherPO;
 import com.zhou.myweather.util.LogcatUtil;
@@ -88,5 +90,23 @@ public class WeatherDAO {
         for (ForecastPO forecastPO : forecastPOs) {
             getDaoSession().getForecastPODao().insert(forecastPO);
         }
+    }
+
+    public void insertCity(List<CityPO> cityPOS) {
+        if (getDaoSession().getCityPODao().count() == 2565) return;
+        LogcatUtil.d("插入数据");
+        for (CityPO cityPO : cityPOS) {
+            getDaoSession().getCityPODao().insert(cityPO);
+        }
+    }
+
+    public List<CityPO> queryCity(String namecn) {
+//        getDaoSession().getCityPODao().queryBuilder().where(new WhereCondition.StringCondition("NAMECN = '"+namecn+"'")).build();
+        return getDaoSession().getCityPODao().queryBuilder().where(CityPODao.Properties.Namecn.like("%" + namecn + "%")).orderAsc(CityPODao.Properties.Areaid).list();
+
+    }
+
+    public void getAllCity() {
+//        query
     }
 }
