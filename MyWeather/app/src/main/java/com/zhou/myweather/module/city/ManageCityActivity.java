@@ -17,6 +17,7 @@ import com.zhou.myweather.model.WeatherInfoManager;
 import com.zhou.myweather.module.main.MainActivity;
 import com.zhou.myweather.db.WeatherVO;
 import com.zhou.myweather.util.LogcatUtil;
+import com.zhou.myweather.util.ToastUtil;
 import com.zhou.myweather.widget.SwipeItemLayout;
 
 import java.util.List;
@@ -64,6 +65,7 @@ public class ManageCityActivity extends BaseActivity implements ManageCityContra
         findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ToastUtil.getInstance().toastShowS("暂无此功能");
 //                startActivity(new Intent(ManageCityActivity.this,));
             }
         });

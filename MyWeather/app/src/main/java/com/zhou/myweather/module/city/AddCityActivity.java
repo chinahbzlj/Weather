@@ -103,7 +103,7 @@ public class AddCityActivity extends BaseActivity {
             @Override
             public void onItemClick(View parent, int position) {
                 String city = HotCityModel.getHotCitys().get(position);
-                if (city.equals("当前城市")) {
+                if (city.equals("当前位置")) {
                     ToastUtil.getInstance().toastShowS("暂时没有定位功能，请选择其他城市");
                 } else {
                     addCity(city);

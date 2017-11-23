@@ -95,9 +95,10 @@ public class WeatherDAO {
     public void insertCity(List<CityPO> cityPOS) {
         if (getDaoSession().getCityPODao().count() == 2565) return;
         LogcatUtil.d("插入数据");
-        for (CityPO cityPO : cityPOS) {
-            getDaoSession().getCityPODao().insert(cityPO);
-        }
+        getDaoSession().getCityPODao().insertInTx(cityPOS);
+//        for (CityPO cityPO : cityPOS) {
+//            getDaoSession().getCityPODao().insert(cityPO);
+//        }
     }
 
     public List<CityPO> queryCity(String namecn) {

@@ -7,6 +7,7 @@ import android.os.Vibrator;
 
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
+import com.tencent.bugly.crashreport.CrashReport;
 import com.zhou.myweather.db.WeatherDAO;
 import com.zhou.myweather.db.dto.CityPO;
 import com.zhou.myweather.model.mos.CityMO;
@@ -52,18 +53,7 @@ public class MyApplication extends Application {
         ToastUtil.getInstance().setApplicatonContext(this);
         WeatherDAO.getWeatherDAO().init(this);
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    List<CityPO> cityPOS = ExcelUtil.readCityExcelFile(myApplication.getAssets().open("weather_areaid.xls"));
-                    WeatherDAO.getWeatherDAO().insertCity(cityPOS);
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
+        CrashReport.initCrashReport(getApplicationContext(), "df16bf03c5", true);
     }
 
 }

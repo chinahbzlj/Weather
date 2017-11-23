@@ -1,5 +1,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao' // apply plugin
+def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("GMT+8"))
+}
 repositories {
     flatDir {
         dir 'libs'
@@ -8,17 +11,17 @@ repositories {
 android {
     compileSdkVersion 23
     buildToolsVersion '26.0.2'
-//    signingConfigs {
-//        debug {
-//            Properties properties = new Properties()
-//            properties.load(project.rootProject.file('local.properties').newDataInputStream())
-//            def sdkDir = properties.getProperty('signing.debug.key')
-//            storeFile file(sdkDir)
-//            storePassword properties.getProperty('RELEASE_STORE_PASSWORD')
-//            keyAlias properties.getProperty('RELEASE_KEY_ALIAS')
-//            keyPassword properties.getProperty('RELEASE_KEY_PASSWORD')
-//        }
-//    }
+    signingConfigs {
+        debug {
+            Properties properties = new Properties()
+            properties.load(project.rootProject.file('local.properties').newDataInputStream())
+            def sdkDir = properties.getProperty('signing.debug.key')
+            storeFile file(sdkDir)
+            storePassword properties.getProperty('RELEASE_STORE_PASSWORD')
+            keyAlias properties.getProperty('RELEASE_KEY_ALIAS')
+            keyPassword properties.getProperty('RELEASE_KEY_PASSWORD')
+        }
+    }
     sourceSets {
         main {
             jniLibs.srcDir 'libs'
@@ -32,6 +35,10 @@ android {
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
         javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
+        ndk {
+            // 设置支持的SO库架构
+            abiFilters 'armeabi', 'armeabi-v7a'//, 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
+        }
     }
     buildTypes {
         release {
@@ -46,7 +53,15 @@ android {
             }
         }
     }
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "${'天气预报'}${releaseTime()}.apk"
+        }
+    }
+
 }
+
 greendao {
     //指定数据库schema版本号，迁移等操作会用到
     schemaVersion 2
@@ -88,4 +103,11 @@ dependencies {
     compile 'net.zetetic:android-database-sqlcipher:3.5.7'
     compile 'org.greenrobot:greendao:3.2.2' // add library
     compile project(':DatePicker')
+
+//    compile 'com.tencent.bugly:crashreport:latest.release' //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
+//    compile 'com.tencent.bugly:nativecrashreport:latest.release' //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
+    compile 'com.tencent.bugly:crashreport:2.1.9'
+    //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
+    compile 'com.tencent.bugly:nativecrashreport:3.0'
+    //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
 }

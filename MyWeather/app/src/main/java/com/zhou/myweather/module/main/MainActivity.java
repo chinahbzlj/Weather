@@ -11,6 +11,7 @@ import android.view.MenuItem;
 
 import android.widget.TextView;
 
+import com.tencent.bugly.crashreport.CrashReport;
 import com.zhou.myweather.R;
 import com.zhou.myweather.base.BaseActivity;
 import com.zhou.myweather.module.city.ManageCityActivity;
