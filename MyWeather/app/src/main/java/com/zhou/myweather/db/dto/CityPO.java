@@ -1,7 +1,5 @@
 package com.zhou.myweather.db.dto;
 
-import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.table.DatabaseTable;
 import com.zhou.myweather.model.mos.BaseMO;
 
 import org.greenrobot.greendao.annotation.Entity;

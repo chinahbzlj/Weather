@@ -1,7 +1,5 @@
 package com.zhou.myweather.model.mos;
 
-import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.table.DatabaseTable;
 import com.zhou.myweather.sdk.model.dto.CityWeatherHolder;
 import com.zhou.myweather.sdk.model.dto.ForecastDTO;
 
@@ -12,43 +10,24 @@ import java.util.List;
  * Created by Powerbee on 2016/5/23.
  */
 
-@DatabaseTable(tableName = "CityWeatherTable")
 public class CityWeatherMO extends BaseMO {
-    @DatabaseField(id = true)
     public String name;
-    @DatabaseField
     public String time;
-    @DatabaseField
     public String temperature;
-    @DatabaseField
     public String weather;
-    @DatabaseField
     public String day_wind_direction;
-    @DatabaseField
     public String day_wind_power;
-    @DatabaseField
     public String day_air_temperature;
-    @DatabaseField
     public String night_weather;
-    @DatabaseField
     public String night_air_temperature;
-    @DatabaseField
     public String weekday;
-    @DatabaseField
     public String sun_begin_end;
-    @DatabaseField
     public String sd;
-    @DatabaseField
     public String wind_power;
-    @DatabaseField
     public String aqi;
-    @DatabaseField
     public String primary_pollutant;
-    @DatabaseField
     public String quality;
-    @DatabaseField
     public String pm2_5;
-    @DatabaseField
     public String wind_direction;
 
     public List<ForecastMO> forecastMOs = new ArrayList<>();

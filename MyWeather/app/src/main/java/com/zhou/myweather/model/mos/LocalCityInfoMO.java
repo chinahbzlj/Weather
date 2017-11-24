@@ -1,70 +1,49 @@
 package com.zhou.myweather.model.mos;
 
-import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.table.DatabaseTable;
 import com.zhou.myweather.sdk.model.dto.CityInfoDTO;
 
 /**
  * Created by Powerbee on 2016/5/18.
  */
 
-@DatabaseTable(tableName = "LocalCityInfoTable")
 public class LocalCityInfoMO extends BaseMO implements Comparable<LocalCityInfoMO> {
 
     /**
      * 区域id
      */
-    @DatabaseField(id = true)
     public String c1;
-    @DatabaseField
     /** 城市级别 */
     public String c10;
-    @DatabaseField
     /** 城市区号 */
     public String c11;
-    @DatabaseField
     /** 邮编 */
     public String c12;
-    @DatabaseField
     /** 海拔 */
     public String c15;
-    @DatabaseField
     /** 雷达站号 */
     public String c16;
-    @DatabaseField
     /** */
     public String c17;
-    @DatabaseField
     /** 城市英文名 */
     public String c2;
-    @DatabaseField
     /** 城市中文名 */
     public String c3;
-    @DatabaseField
     /** 城市所在市英文名 */
     public String c4;
-    @DatabaseField
     /** 城市所在市中文名 */
     public String c5;
-    @DatabaseField
     /** 城市所在省英文名 */
     public String c6;
-    @DatabaseField
     /** 城市所在省中文名 */
     public String c7;
-    @DatabaseField
     /** 城市所在国家英文名 */
     public String c8;
-    @DatabaseField
     /** 城市所在国家中文名 */
     public String c9;
-    @DatabaseField
     /** 纬度 */
     public String latitude;
-    @DatabaseField
     /** 经度 */
     public String longitude;
-    @DatabaseField
     public Long addTime;
 
     public LocalCityInfoMO() {

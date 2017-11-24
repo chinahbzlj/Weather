@@ -97,9 +97,9 @@ public class RetrofitHelper {
             }
         };
         Context context = MyApplication.getInstance().getApplicationContext();
-        File[] file = context.getExternalCacheDirs();
+//        File[] file = context.getExternalCacheDirs();
         okHttpClient = new OkHttpClient.Builder().addInterceptor(interceptor)
-                .cache(new Cache(file[0], 20 * 1024 * 1024))
+//                .cache(new Cache(file[0], 20 * 1024 * 1024))
                 .connectTimeout(10, TimeUnit.SECONDS)
                 .writeTimeout(10, TimeUnit.SECONDS)
                 .readTimeout(10, TimeUnit.SECONDS)

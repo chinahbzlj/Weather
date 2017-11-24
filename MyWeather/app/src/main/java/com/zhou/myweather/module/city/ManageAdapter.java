@@ -1,10 +1,12 @@
 package com.zhou.myweather.module.city;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zhou.myweather.R;
@@ -16,6 +18,8 @@ import com.zhou.myweather.util.LogcatUtil;
 import com.zhou.myweather.util.ToastUtil;
 
 import java.util.List;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by 周利杰 on 2017/9/30.
@@ -68,6 +72,7 @@ public class ManageAdapter extends BaseRecycleViewAdapter<ManageAdapter.ViewHold
     public class ViewHolder extends BaseRecycleViewHoldler implements View.OnClickListener {
         private TextView tvCityName, tvCityTemperature, tvCityWeather, tvCityMsg;
         private ImageButton delete;
+        private RelativeLayout rlManagerCityItem;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -77,6 +82,8 @@ public class ManageAdapter extends BaseRecycleViewAdapter<ManageAdapter.ViewHold
             tvCityMsg = (TextView) itemView.findViewById(R.id.tv_city_msg);
             delete = (ImageButton) itemView.findViewById(R.id.delete);
             delete.setOnClickListener(this);
+            rlManagerCityItem = (RelativeLayout) itemView.findViewById(R.id.rl_manager_city_item);
+            rlManagerCityItem.setOnClickListener(this);
         }
 
         @Override
@@ -86,6 +93,11 @@ public class ManageAdapter extends BaseRecycleViewAdapter<ManageAdapter.ViewHold
                 weatherPOJOS.remove(pos);
                 CityManagerListenerManager.getCityManagerListenerManager().getCityManagerListener().removeCity(pos);
                 notifyItemRemoved(pos);
+            } else if (v.getId() == R.id.rl_manager_city_item) {
+                Intent intent = new Intent();
+                intent.putExtra("item", getAdapterPosition() + "");
+                ((ManageCityActivity) mContext).setResult(RESULT_OK, intent);
+                ((ManageCityActivity) mContext).finish();
             }
         }
     }

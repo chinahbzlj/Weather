@@ -1,24 +1,18 @@
 package com.zhou.myweather.model.mos;
 
-import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.table.DatabaseTable;
 import com.zhou.myweather.sdk.model.dto.ForecastDTO;
 
 /**
  * Created by Powerbee on 2016/5/23.
  */
 
-@DatabaseTable(tableName = "ForecastTable")
 public class ForecastMO extends BaseMO implements Comparable<ForecastMO> {
 
     /**
      * 星期几
      */
-    @DatabaseField(id = true)
     public String name;
-    @DatabaseField
     public String weekday;
-    @DatabaseField
     /**
      * 年月日
      */
@@ -26,61 +20,46 @@ public class ForecastMO extends BaseMO implements Comparable<ForecastMO> {
     /**
      * 白天天气温度
      */
-    @DatabaseField
     public String day_air_temperature;
     /**
      * 白天天气
      */
-    @DatabaseField
     public String day_weather;
     /**  */
-    @DatabaseField
     public String day_weather_pic;
     /**
      * 白天 风向编号
      */
-    @DatabaseField
     public String day_wind_direction;
     /**
      * 白天风力编号
      */
-    @DatabaseField
     public String day_wind_power;
     /**
      * 晚上天气温度
      */
-    @DatabaseField
     public String night_air_temperature;
     /**
      * 晚上天气
      */
-    @DatabaseField
     public String night_weather;
     /**  */
-    @DatabaseField
     public String night_weather_pic;
     /**
      * 晚上风向编号
      */
-    @DatabaseField
     public String night_wind_direction;
     /**
      * 晚上风力编号
      */
-    @DatabaseField
     public String night_wind_power;
     /**
      * 日出日落时间
      */
-    @DatabaseField
     public String sun_begin_end;
-    @DatabaseField
     public String jiangshui;
-    @DatabaseField
     public String air_press;
-    @DatabaseField
     public String ziwaixian;
-    @DatabaseField
     public Integer order;
 
 
