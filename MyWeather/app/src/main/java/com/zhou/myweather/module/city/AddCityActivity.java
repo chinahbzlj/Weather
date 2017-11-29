@@ -103,11 +103,11 @@ public class AddCityActivity extends BaseActivity implements AddCityContract.Vie
             public void onItemClick(View parent, int position) {
                 String city = HotCityModel.getHotCitys().get(position);
                 if (city.equals("当前位置")) {
+                    ToastUtil.getInstance().toastShowS("正在搜索...");
                     getPersimmions();
                     persenter.startLocation();
-                } else {
-                    addCity(CITY_NAME, city);
-                }
+                } else addCity(CITY_NAME, city);
+
             }
         });
         search.addTextChangedListener(new EditChangeListener() {
@@ -142,7 +142,6 @@ public class AddCityActivity extends BaseActivity implements AddCityContract.Vie
             @Override
             public void onItemClick(View parent, int position) {
                 persenter.queryCity(position);
-//                addCity(CITY_NAME, cityPOS.get(position).namecn);
             }
         });
     }
@@ -184,7 +183,7 @@ public class AddCityActivity extends BaseActivity implements AddCityContract.Vie
 
     private void addCity(String type, String city) {
         if (WeatherInfoManager.getWeatherInfoManager().isContains(city)) {
-            ToastUtil.getInstance().toastShowS(city + "-已添加");
+            ToastUtil.getInstance().toastShowS("当前位置为：" + city + "-已存在");
             return;
         }
         Intent intent = new Intent();
