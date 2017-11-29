@@ -1,4 +1,4 @@
-package com.zhou.myweather.location;
+package com.zhou.myweather.service;
 
 public class Utils {
 	public final static String CoorType_GCJ02 = "gcj02";

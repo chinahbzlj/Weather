@@ -101,10 +101,25 @@ public class WeatherDAO {
 //        }
     }
 
+    /**
+     * 模糊查询
+     *
+     * @param namecn
+     * @return
+     */
     public List<CityPO> queryCity(String namecn) {
 //        getDaoSession().getCityPODao().queryBuilder().where(new WhereCondition.StringCondition("NAMECN = '"+namecn+"'")).build();
         return getDaoSession().getCityPODao().queryBuilder().where(CityPODao.Properties.Namecn.like("%" + namecn + "%")).orderAsc(CityPODao.Properties.Areaid).list();
+    }
 
+    /**
+     * 精确查询
+     *
+     * @param namecn
+     * @return
+     */
+    public List<CityPO> accurateQueryCity(String namecn) {
+        return getDaoSession().getCityPODao().queryBuilder().where(CityPODao.Properties.Namecn.eq(namecn)).orderAsc(CityPODao.Properties.Areaid).list();
     }
 
     public void getAllCity() {

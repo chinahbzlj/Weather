@@ -14,12 +14,13 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 
 import com.zhou.myweather.R;
+import com.zhou.myweather.base.BaseActivity;
 import com.zhou.myweather.util.PermissionsChecker;
 
 /**
  * Created by Powerbee on 2016/6/20.
  */
-public class PermissionsActivity extends AppCompatActivity {
+public class PermissionsActivity extends BaseActivity {
     public static final int PERMISSIONS_GRANTED = 0; // 权限授权
     public static final int PERMISSIONS_DENIED = 1; // 权限拒绝
 

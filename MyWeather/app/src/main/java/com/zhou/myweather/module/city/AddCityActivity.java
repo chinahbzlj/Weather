@@ -1,7 +1,11 @@
 package com.zhou.myweather.module.city;
 
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.v4.content.ContextCompat;
@@ -21,11 +25,15 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.baidu.location.BDAbstractLocationListener;
+import com.baidu.location.BDLocation;
+import com.baidu.location.Poi;
 import com.zhou.myweather.R;
 import com.zhou.myweather.base.BaseActivity;
 import com.zhou.myweather.base.BaseView;
 import com.zhou.myweather.base.adapter.BaseRecycleViewAdapter;
 import com.zhou.myweather.base.adapter.BaseRecycleViewHoldler;
+import com.zhou.myweather.core.MyApplication;
 import com.zhou.myweather.db.WeatherDAO;
 import com.zhou.myweather.db.dto.CityPO;
 import com.zhou.myweather.model.HotCityModel;
@@ -34,6 +42,7 @@ import com.zhou.myweather.module.weather.EditChangeListener;
 import com.zhou.myweather.module.weather.MyItemDecoration;
 import com.zhou.myweather.module.weather.adapter.CitysAdapter;
 import com.zhou.myweather.module.weather.adapter.HotCityAdapter;
+import com.zhou.myweather.service.LocationService;
 import com.zhou.myweather.util.ActivityUtils;
 import com.zhou.myweather.util.LogcatUtil;
 import com.zhou.myweather.util.ToastUtil;
@@ -47,7 +56,7 @@ import butterknife.OnClick;
 /**
  * Created by Powerbee on 2016/5/20.
  */
-public class AddCityActivity extends BaseActivity {
+public class AddCityActivity extends BaseActivity implements AddCityContract.View {
     private Context mContext = AddCityActivity.this;
     @Bind(R.id.icon_cancel)
     ImageView iconCancel;
@@ -62,41 +71,31 @@ public class AddCityActivity extends BaseActivity {
     private HotCityAdapter hotCityAdapter;
     private List<CityPO> cityPOS;
     private SearchCityAdapter adapter;
+    private AddCityContract.Persenter persenter;
 
     @Override
     public void handleMsg(Message msg) {
         super.handleMsg(msg);
-        if (msg.what == 200) {
-            dismissLoading();
-        }
+        if (msg.what == 200) dismissLoading();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_city);
+        new AddCityPersenter(this);
         toolbar.setTitle("添加城市");
-        cityPOS = new ArrayList<>();
         initView();
-
+        persenter.start();
     }
 
-
     public static final String CITY_NAME = "cityName";
+    public static final String SELECT_CITY_NAME = "selectcityName";
 
     private void initView() {
-
-//        hotCityGridView.setAdapter(new HotCityAdapter());
         hotCityAdapter = new HotCityAdapter(mContext);
-        hotCityAdapter.setOnItemClickListener(new BaseRecycleViewAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View parent, int position) {
-
-            }
-        });
         hotCityAdapter.setData(HotCityModel.getHotCitys());
         hotCityRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
-//        hotCityRecyclerView.addItemDecoration(new HotCityItemDecoration(this));
         hotCityRecyclerView.addItemDecoration(new MyItemDecoration(this, 3));
         hotCityRecyclerView.setAdapter(hotCityAdapter);
         hotCityAdapter.setOnItemClickListener(new BaseRecycleViewAdapter.OnItemClickListener() {
@@ -104,9 +103,10 @@ public class AddCityActivity extends BaseActivity {
             public void onItemClick(View parent, int position) {
                 String city = HotCityModel.getHotCitys().get(position);
                 if (city.equals("当前位置")) {
-                    ToastUtil.getInstance().toastShowS("暂时没有定位功能，请选择其他城市");
+                    getPersimmions();
+                    persenter.startLocation();
                 } else {
-                    addCity(city);
+                    addCity(CITY_NAME, city);
                 }
             }
         });
@@ -119,11 +119,7 @@ public class AddCityActivity extends BaseActivity {
                     recyclerView.setVisibility(View.GONE);
                     return;
                 }
-                hotCityRecyclerView.setVisibility(View.GONE);
-                recyclerView.setVisibility(View.VISIBLE);
-                cityPOS.clear();
-                cityPOS.addAll(WeatherDAO.getWeatherDAO().queryCity(s.toString().trim()));
-                adapter.notifyDataSetChanged();
+                persenter.queryAddCity(s.toString().trim());
             }
         });
         search.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -142,16 +138,51 @@ public class AddCityActivity extends BaseActivity {
         adapter = new SearchCityAdapter();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(new BaseRecycleViewAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View parent, int position) {
-                addCity(cityPOS.get(position).namecn);
+                persenter.queryCity(position);
+//                addCity(CITY_NAME, cityPOS.get(position).namecn);
             }
         });
     }
 
-    private void addCity(String city) {
+    @Override
+    public void setCitys(List<CityPO> citys) {
+        this.cityPOS = citys;
+        recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void locationSuccess(String country, String city, String district) {
+        persenter.stopLocation();
+        addCity(CITY_NAME, district);
+    }
+
+    @Override
+    public void selectCity(String namecn) {
+        persenter.stopLocation();
+        addCity(SELECT_CITY_NAME, namecn);
+    }
+
+    @Override
+    public void addOrSelectCity(String type, String city) {
+        if (WeatherInfoManager.getWeatherInfoManager().isContains(city)) {
+            ToastUtil.getInstance().toastShowS(city + "-已存在");
+            return;
+        }
+        Intent intent = new Intent();
+        intent.putExtra(CITY_NAME, city);
+        setResult(RESULT_OK, intent);
+        finish();
+    }
+
+    @Override
+    public void notifyAdapter() {
+        adapter.notifyDataSetChanged();
+    }
+
+    private void addCity(String type, String city) {
         if (WeatherInfoManager.getWeatherInfoManager().isContains(city)) {
             ToastUtil.getInstance().toastShowS(city + "-已添加");
             return;
@@ -175,19 +206,19 @@ public class AddCityActivity extends BaseActivity {
     }
 
     public void mfinish() {
-        if (WeatherInfoManager.getWeatherInfoManager().getWeatherMap().size() != 0) {
-            finish();
-        } else {
-            ActivityUtils.getActivityUtils().exit();
-        }
+        if (WeatherInfoManager.getWeatherInfoManager().getWeatherMap().size() != 0) finish();
+        else ActivityUtils.getActivityUtils().exit();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            mfinish();
-        }
+        if (item.getItemId() == android.R.id.home) mfinish();
         return true;
+    }
+
+    @Override
+    public void setPersenter(AddCityContract.Persenter persenter) {
+        this.persenter = persenter;
     }
 
     public class SearchCityAdapter extends BaseRecycleViewAdapter<SearchCityAdapter.ViewHolder> {
@@ -224,4 +255,46 @@ public class AddCityActivity extends BaseActivity {
             }
         }
     }
+
+
+    private String permissionInfo;
+
+    @TargetApi(23)
+    private void getPersimmions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            ArrayList<String> permissions = new ArrayList<String>();
+            /***
+             * 定位权限为必须权限，用户如果禁止，则每次进入都会申请
+             */
+            // 定位精确位置
+            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                permissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
+            }
+            if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+            }
+
+            if (permissions.size() > 0) {
+                requestPermissions(permissions.toArray(new String[permissions.size()]), SDK_PERMISSION_REQUEST);
+            }
+        }
+    }
+
+    private final int SDK_PERMISSION_REQUEST = 127;
+
+    @TargetApi(23)
+    private boolean addPermission(ArrayList<String> permissionsList, String permission) {
+        if (checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) { // 如果应用没有获得对应权限,则添加到列表中,准备批量申请
+            if (shouldShowRequestPermissionRationale(permission)) {
+                return true;
+            } else {
+                permissionsList.add(permission);
+                return false;
+            }
+
+        } else {
+            return true;
+        }
+    }
+
 }

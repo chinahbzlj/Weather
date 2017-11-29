@@ -1,6 +1,10 @@
 package com.zhou.myweather.module.main;
 
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.support.v7.widget.Toolbar;
 
 import android.support.v4.view.ViewPager;
@@ -22,6 +26,7 @@ import com.zhou.myweather.util.ActivityUtils;
 import com.zhou.myweather.util.LogcatUtil;
 import com.zhou.myweather.util.ToastUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -172,5 +177,15 @@ public class MainActivity extends BaseActivity implements MainContract.View, Cit
                 }
             }, 2000);
         } else ActivityUtils.getActivityUtils().exit();
+    }
+
+
+
+    @TargetApi(23)
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        // TODO Auto-generated method stub
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
     }
 }

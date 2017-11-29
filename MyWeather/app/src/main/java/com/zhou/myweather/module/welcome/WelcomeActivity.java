@@ -1,6 +1,10 @@
 package com.zhou.myweather.module.welcome;
 
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -19,6 +23,7 @@ import com.zhou.myweather.util.ExcelUtil;
 import com.zhou.myweather.util.LogcatUtil;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -43,6 +48,7 @@ public class WelcomeActivity extends BaseActivity {
 //        decorView.setSystemUiVisibility(option);
 //        ActionBar actionBar = getSupportActionBar();
 //        actionBar.hide();
+
         if (WeatherDAO.getWeatherDAO().getDaoSession().getCityPODao().count() != 2565)
             new Thread(new Runnable() {
                 @Override
@@ -76,5 +82,6 @@ public class WelcomeActivity extends BaseActivity {
             startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
         }
     };
+
 
 }

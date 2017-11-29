@@ -5,12 +5,14 @@ import android.app.Service;
 import android.content.res.AssetManager;
 import android.os.Vibrator;
 
+import com.baidu.mapapi.SDKInitializer;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.zhou.myweather.db.WeatherDAO;
 import com.zhou.myweather.db.dto.CityPO;
 import com.zhou.myweather.model.mos.CityMO;
+import com.zhou.myweather.service.LocationService;
 import com.zhou.myweather.util.ExcelUtil;
 import com.zhou.myweather.util.FileManagerUtils;
 import com.zhou.myweather.util.LeHandler;
@@ -26,6 +28,7 @@ import java.util.List;
 public class MyApplication extends Application {
     private static MyApplication myApplication = null;
 
+    public LocationService locationService;
     public static MyApplication getInstance() {
         return myApplication;
     }
@@ -47,9 +50,9 @@ public class MyApplication extends Application {
         /***
          * 初始化定位sdk，建议在Application中创建
          */
-//        locationService = new LocationService(getApplicationContext());
+        locationService = new LocationService(getApplicationContext());
         mVibrator = (Vibrator) getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);
-//        SDKInitializer.initialize(getApplicationContext());
+        SDKInitializer.initialize(getApplicationContext());
         ToastUtil.getInstance().setApplicatonContext(this);
         WeatherDAO.getWeatherDAO().init(this);
 

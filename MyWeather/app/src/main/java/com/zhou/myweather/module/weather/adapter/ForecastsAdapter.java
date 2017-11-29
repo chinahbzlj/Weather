@@ -35,9 +35,6 @@ public class ForecastsAdapter extends BaseRecycleViewAdapter<ForecastsAdapter.Vi
 
     }
 
-    public ForecastsAdapter(Context mContext) {
-        this.mContext = mContext;
-    }
 
     public void setData(List<ForecastDTO> forecastDTOs) {
         this.forecastDTOs = forecastDTOs;
@@ -46,6 +43,7 @@ public class ForecastsAdapter extends BaseRecycleViewAdapter<ForecastsAdapter.Vi
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        mContext = parent.getContext();
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_forecast, null);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
