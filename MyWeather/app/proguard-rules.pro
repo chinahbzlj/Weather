@@ -17,7 +17,7 @@
 #}
 -dontwarn com.tencent.bugly.**
 -keep public class com.tencent.bugly.**{*;}
-
+-keep class android.support.**{*;}
 #butterknife
 -keep class butterknife.** { *; }
 -dontwarn butterknife.internal.**
@@ -75,3 +75,27 @@
 -keep class com.baidu.** {*;}
 -keep class vi.com.** {*;}
 -dontwarn com.baidu.**
+
+### greenDAO 3
+-keepclassmembers class * extends org.greenrobot.greendao.AbstractDao {
+    public static java.lang.String TABLENAME;
+}
+-keep class **$Properties
+
+# If you do not use SQLCipher:
+-dontwarn org.greenrobot.greendao.database.**
+#实体类所在的包
+-keep class com.zhou.myweather.db.**
+-keep class com.zhou.myweather.db.dto.**
+-keep class com.zhou.myweather.net.**{*;}
+-keep class com.zhou.myweather.sdk.model.dto.index.**{*;}
+-keep class com.zhou.myweather.sdk.model.dto.**{*;}
+#-keep class com.zhou.myweather.net.CityAllWeatherInfoDTO$* {
+#    *;
+#}
+-keep class com.zhou.myweather.CityPODao
+-keep class com.zhou.myweather.DaoMaster
+-keep class com.zhou.myweather.DaoSession
+-keep class com.zhou.myweather.ForecastPODao
+-keep class com.zhou.myweather.WeatherPODao
+

@@ -9,12 +9,16 @@ import android.widget.TextView;
 import com.zhou.myweather.R;
 import com.zhou.myweather.base.BaseActivity;
 
+import butterknife.Bind;
+
 /**
  * Created by 周利杰 on 2017/9/8.
  */
 
 public class SettingActivity extends BaseActivity {
-    private TextView tvSettingVersion;
+    @Bind(R.id.text_version)
+    TextView textVersion;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -28,7 +32,8 @@ public class SettingActivity extends BaseActivity {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-        tvSettingVersion = (TextView) findViewById(R.id.tvSettingVersion);
-        tvSettingVersion.setText("当前版本：" + version);
+//        tvSettingVersion = (TextView) findViewById(R.id.tvSettingVersion);
+//        tvSettingVersion.setText("当前版本：" + version);
+        textVersion.setText("V " + version);
     }
 }

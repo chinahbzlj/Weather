@@ -2,12 +2,16 @@ package com.zhou.myweather.core;
 
 import android.app.Application;
 import android.app.Service;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Vibrator;
+import android.widget.Toast;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
+import com.tencent.bugly.Bugly;
+import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.zhou.myweather.db.WeatherDAO;
 import com.zhou.myweather.db.dto.CityPO;
@@ -56,7 +60,45 @@ public class MyApplication extends Application {
         ToastUtil.getInstance().setApplicatonContext(this);
         WeatherDAO.getWeatherDAO().init(this);
 
-        CrashReport.initCrashReport(getApplicationContext(), "df16bf03c5", true);
+//        CrashReport.initCrashReport(getApplicationContext(), "df16bf03c5", true);
+        Bugly.init(getApplicationContext(), "df16bf03c5", false);
     }
 
+
+//    Beta.upgradeListener = new UpgradeListener() {
+//        @Override
+//        public void onUpgrade(int ret,UpgradeInfo strategy, boolean isManual, boolean isSilence) {
+//            if (strategy != null) {
+//                Intent i = new Intent();
+//                i.setClass(getApplicationContext(), UpgradeActivity.class);
+//                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                startActivity(i);
+//            } else {
+//                Toast.makeText(BaseApplication.this, "没有更新", Toast.LENGTH_LONG).show();
+//            }
+//        }
+//    };
+//
+///* 设置更新状态回调接口 */
+//    Beta.upgradeStateListener = new UpgradeStateListener() {
+//        @Override
+//        public void onUpgradeSuccess(boolean isManual) {
+//            Toast.makeText(getApplicationContext(),"UPGRADE_SUCCESS",Toast.LENGTH_SHORT).show();
+//        }
+//
+//        @Override
+//        public void onUpgradeFailed(boolean isManual) {
+//            Toast.makeText(getApplicationContext(),"UPGRADE_FAILED",Toast.LENGTH_SHORT).show();
+//        }
+//
+//        @Override
+//        public void onUpgrading(boolean isManual) {
+//            Toast.makeText(getApplicationContext(),"UPGRADE_CHECKING",Toast.LENGTH_SHORT).show();
+//        }
+//
+//        @Override
+//        public void onUpgradeNoVersion(boolean isManual) {
+//            Toast.makeText(getApplicationContext(),"UPGRADE_NO_VERSION",Toast.LENGTH_SHORT).show();
+//        }
+//    };
 }

@@ -6,9 +6,30 @@
 
     <include layout="@layout/toobars" />
 
-    <TextView
-        android:id="@+id/tvSettingVersion"
-        android:textSize="@dimen/text_size_18"
+    <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="40dp"
+        android:src="@mipmap/icon_launcher" />
+
+    <TextView
+        android:id="@+id/text_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="40dp"
+        android:textSize="@dimen/text_size_18" />
+
+    <Button
+        android:id="@+id/btn_abo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:background="@drawable/btn_about_background"
+        android:text="检查版本"
+        android:textColor="@color/text_color_gray"
+        android:textSize="@dimen/text_size_20" />
+
 </LinearLayout>

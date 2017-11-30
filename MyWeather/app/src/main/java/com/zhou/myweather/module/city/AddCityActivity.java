@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
@@ -103,9 +104,15 @@ public class AddCityActivity extends BaseActivity implements AddCityContract.Vie
             public void onItemClick(View parent, int position) {
                 String city = HotCityModel.getHotCitys().get(position);
                 if (city.equals("当前位置")) {
-                    ToastUtil.getInstance().toastShowS("正在搜索...");
-                    getPersimmions();
-                    persenter.startLocation();
+//                    ToastUtil.getInstance().toastShowS("正在搜索...");
+                    if (Build.VERSION.SDK_INT >= 23) {
+                        getPersimmions();
+//                        getPersimmions();
+//                        persenter.startLocation();
+                    } else {
+                        getPersimmions();
+                        persenter.startLocation();
+                    }
                 } else addCity(CITY_NAME, city);
 
             }
@@ -280,6 +287,17 @@ public class AddCityActivity extends BaseActivity implements AddCityContract.Vie
     }
 
     private final int SDK_PERMISSION_REQUEST = 127;
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == SDK_PERMISSION_REQUEST && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            getPersimmions();
+            persenter.startLocation();
+        } else {
+            LogcatUtil.d("没有获取权限");
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
 
     @TargetApi(23)
     private boolean addPermission(ArrayList<String> permissionsList, String permission) {

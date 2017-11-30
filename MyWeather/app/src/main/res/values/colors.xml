@@ -12,4 +12,6 @@
     <color name="blue_146">#92ddfc</color> <!-- (146,221,252) -->
     <color name="bg">#FFEDEDED</color>
     <color name="linear_background">#414345</color>
+    <color name="black">#000000</color>
+    <color name="text_color_gray">#FFA2A2A2</color>
 </resources>
